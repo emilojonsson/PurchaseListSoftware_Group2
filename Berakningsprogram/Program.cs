@@ -27,6 +27,12 @@
                     double Y = double.Parse(Console.ReadLine());
                     Console.WriteLine($"{X} * {Y} = {X * Y}");
                 }
+                else if (command == "kvadrat")
+                {
+                    Console.Write("tal 1: ");
+                    double X = double.Parse(Console.ReadLine());
+                    Console.WriteLine($"{X}^2 = {X * X}");
+                }
                 else if (command == "hjälp")
                 {
                     Console.WriteLine($"Tyvärr ej implementerat!");
