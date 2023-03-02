@@ -1,4 +1,6 @@
 ﻿
+using System.Xml.Linq;
+
 namespace purchase_list_group2
 {
     public class Program
@@ -51,7 +53,7 @@ namespace purchase_list_group2
             }
         }
 
-        static void SAMenu(User systemAdministrator, List<Store> storeList)
+        static void SAMenu(User systemAdministrator, Database data)
         {
             Console.WriteLine();
             Console.WriteLine("1 Add customer account");
@@ -74,22 +76,22 @@ namespace purchase_list_group2
                         //newUser.createAccount();
                         break;
                     case 2:
-                        addStore(storeList);
+                        addStore(data);
                         break;
                     case 3:
-                        selectStore(storeList).addStoreItem();
+                        selectStore(data.StoreObjects).addStoreItem();
                         break;
                     case 4:
-                        selectStore(storeList).editStoreItem();
+                        selectStore(data.StoreObjects).editStoreItem();
                         break;
                     case 5:
-                        selectStore(storeList).addCampaign();
+                        selectStore(data.StoreObjects).addCampaign();
                         break;
                     case 6:
-                        Store.removeStoreAndItems(storeList);
+                        Store.removeStoreAndItems(data.StoreObjects);
                         break;
                     case 7:
-                        selectStore(storeList).viewHistoricalPurchases(storeList);
+                        selectStore(data.StoreObjects).viewHistoricalPurchases(data.StoreObjects);
                         break;
                     default:
                         if (menuChoice == 0)
@@ -109,14 +111,14 @@ namespace purchase_list_group2
                 Console.WriteLine("\nInvalid input. Select a number from the menu and press [Enter].");
             }
             // return to the SAMenu method to show the menu again
-            SAMenu(systemAdministrator, storeList);
+            SAMenu(systemAdministrator, data);
         }
 
-        private static void addStore(List<Store> storeList)
+        private static void addStore(Database data)
         {
             Console.WriteLine("What's the name of the new store:");
             string storeName = Console.ReadLine();
-            storeList.Add(new Store(storeName));
+            data.StoreObjects.Add(new Store(storeName));
             Console.WriteLine($"Store '{storeName}' has been added.");
             Console.WriteLine("Press Enter to continue..");
             Console.ReadLine();
@@ -209,15 +211,15 @@ namespace purchase_list_group2
 
             User systemAdmin = new User("systemadmin", "system@gmail.com", true);
             User customer1 = new User("svenne", "svenne@gmail.com", false);
-            User customer2 = new User("benne", "benne@gmail.com", false);
+            //User customer2 = new User("benne", "benne@gmail.com", false);
             List<User> users = new List<User>();
-            users.Add(systemAdmin);
-            users.Add(customer1);
-            users.Add(customer2);
+            //users.Add(systemAdmin);
+            //users.Add(customer1);
+            //users.Add(customer2);
             List<Store> storeList = new List<Store>();
-            Store store1 = new Store("Jula");
-            storeList.Add(store1);
-            ShoppingList shoppingList1 = new ShoppingList("List to Jula", customer1, store1);
+            data1.StoreObjects = new List<Store>();
+            //data1.UserObjects = new List<User>();
+            data1.UserObjects.Add(systemAdmin);
 
             bool loop = true;
             while (loop)
@@ -235,7 +237,7 @@ namespace purchase_list_group2
                     switch (menuChoice)
                     {
                         case 1:
-                            SAMenu(systemAdmin, storeList);
+                            SAMenu(systemAdmin, data1);
                             break;
                         case 2:
                             CustomerMenu(customer1, storeList, users);

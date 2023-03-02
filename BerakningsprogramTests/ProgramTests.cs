@@ -24,7 +24,7 @@ namespace Berakningsprogram.Tests
 
             Store store1 = new Store("Ikea");
             StoreItem storeItem = new StoreItem(expectedName, expectedCategory, expectedPrice, expectedEnum);
-            store1.inventory.Add(storeItem);
+            store1.Inventory.Add(storeItem);
             ShoppingList shoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), store1);
 
             string simulateUserInMethod = "readLine\n" + "1\n" + "10\n" + "readLine\n";
@@ -49,8 +49,8 @@ namespace Berakningsprogram.Tests
             StoreItem expectedToRemain = new StoreItem(expectedToRemainName, "BBB", 100, Item.UnitEnum.Pcs);
 
             Store store1 = new Store("Ikea");
-            store1.inventory.Add(expectedToRemoved);
-            store1.inventory.Add(expectedToRemain);
+            store1.Inventory.Add(expectedToRemoved);
+            store1.Inventory.Add(expectedToRemain);
             ShoppingList shoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), store1);
             shoppingList.ItemList.Add(new ShoppingListItem(expectedToRemoved, 5));
             shoppingList.ItemList.Add(new ShoppingListItem(expectedToRemain, 10));
@@ -73,8 +73,8 @@ namespace Berakningsprogram.Tests
             StoreItem expectedNotEdit = new StoreItem("Article 1", "BBB", 100, Item.UnitEnum.Pcs);
 
             Store store1 = new Store("Ikea");
-            store1.inventory.Add(expectedToEdit);
-            store1.inventory.Add(expectedNotEdit);
+            store1.Inventory.Add(expectedToEdit);
+            store1.Inventory.Add(expectedNotEdit);
             ShoppingList shoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), store1);
             shoppingList.ItemList.Add(new ShoppingListItem(expectedToEdit, 5));
             shoppingList.ItemList.Add(new ShoppingListItem(expectedNotEdit, 5));

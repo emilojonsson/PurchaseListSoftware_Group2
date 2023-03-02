@@ -2,24 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
 namespace purchase_list_group2
 {
+    [DataContract]
     public class ShoppingList
     {
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
         public Guid ShoppingListID { get; set; }
+        [DataMember]
         public double TotalCost { get; set; }
+        [DataMember]
         public List<ShoppingListItem> ItemList { get; set; }
+        [DataMember]
         public User Customer { get; set; }
+        [DataMember]
         public Status StatusShoppinglist { get; set; }
+        [DataMember]
         public Store Store { get; set; }
         public ShoppingList(string name, User customer, Store store) 
         {
             this.Name = name;
-            this.ShoppingListID = new Guid();
+            this.ShoppingListID = Guid.NewGuid();
             this.TotalCost = 0;
             this.ItemList = new List<ShoppingListItem>();
             this.Customer = customer;
@@ -40,7 +49,7 @@ namespace purchase_list_group2
                 int selectInt = int.Parse(Console.ReadLine()) - 1;
                 Console.WriteLine("How many/much of the item do you wish to add:");
                 double quantity = double.Parse(Console.ReadLine());
-                ItemList.Add(new ShoppingListItem(Store.inventory[selectInt], quantity));
+                ItemList.Add(new ShoppingListItem(Store.Inventory[selectInt], quantity));
                 Console.WriteLine($"{ItemList[ItemList.Count - 1].ToString()}, has been added to the list. Press any key to continue...");
             }
             catch (Exception ex)

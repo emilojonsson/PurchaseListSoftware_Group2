@@ -5,13 +5,13 @@ namespace purchase_list_group2
 {
     internal class Database
     {
-        public List<Store> storeObjects { get; set; } = new List<Store>();
-        public List<User> userObjects { get; set; } = new List<User>();
+        public List<Store> StoreObjects { get; set; } = new List<Store>();
+        public List<User> UserObjects { get; set; } = new List<User>();
 
         public void LoadDataBase()
         {
-            storeObjects = LoadViaDataContractSerialization<List<Store>>("storeObjects.xml");
-            userObjects = LoadViaDataContractSerialization<List<User>>("userObjects.xml");
+            StoreObjects = LoadViaDataContractSerialization<List<Store>>("storeObjects.xml");
+            UserObjects = LoadViaDataContractSerialization<List<User>>("userObjects.xml");
             //if (activities != null)
             //{
             //    foreach (Activity activity in activities)
@@ -38,8 +38,8 @@ namespace purchase_list_group2
             //    }
             //    SaveViaDataContractSerialization(activities, "activity.xml");
             //}
-            SaveViaDataContractSerialization(userObjects, "user.xml");
-            SaveViaDataContractSerialization(storeObjects, "store.xml");
+            SaveViaDataContractSerialization(UserObjects, "userObjects.xml");
+            SaveViaDataContractSerialization(StoreObjects, "storeObjects.xml");
         }
 
         public static string FilePath(string fileName)

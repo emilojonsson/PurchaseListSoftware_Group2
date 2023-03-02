@@ -15,23 +15,19 @@ namespace purchase_list_group2
         [DataMember]
         public string Name { get; set; }
         [DataMember]
-        public Guid StoreID { get; set; }
+        public Guid StoreID { get; set; } = Guid.NewGuid();
         [DataMember]
-        public List<StoreItem> inventory;
+        public List<StoreItem> Inventory = new List<StoreItem>();
         [DataMember]
-        public List<Dictionary<string, object>> Campaigns { get; set; }
+        public List<Dictionary<string, object>> Campaigns { get; set; } = new List<Dictionary<string, object>>();
         [DataMember]
-        public List<Dictionary<string, object>> Purchases { get; set; }
+        public List<Dictionary<string, object>> Purchases { get; set; } = new List<Dictionary<string, object>>();
         [DataMember]
         public List<ShoppingListItem> PurchasedItems { get; set; } = new List<ShoppingListItem>();
 
         public Store(string name)
         {
             Name = name;
-            StoreID = Guid.NewGuid();
-            inventory = new List<StoreItem>();
-            Campaigns = new List<Dictionary<string, object>>();
-            Purchases = new List<Dictionary<string, object>>();
         }
 
         public static void removeStoreAndItems(List<Store> storeList)
@@ -128,7 +124,7 @@ namespace purchase_list_group2
                     Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Gram}. Gram");
                 }
                 StoreItem storeItem = new StoreItem(name, category, pricePerItem, unit);
-                inventory.Add(storeItem);
+                Inventory.Add(storeItem);
                 double totalPrice = pricePerItem * quantity;
                 Console.WriteLine($"\nSummary details of item added:\nQty: {quantity}\nItem name: {storeItem.Name}\nCategory: {storeItem.Category}\nStore Name: {Name}\nTotal price: {totalPrice}kr\nUnit type: {storeItem.Unit}");
 
@@ -145,7 +141,7 @@ namespace purchase_list_group2
             viewStoreItems();
             Console.WriteLine("\nWhat item number do you want to edit? [Press 0 to Exit]");
             int selectInt;
-            while (!int.TryParse(Console.ReadLine(), out selectInt) || selectInt < 0 || selectInt > inventory.Count)
+            while (!int.TryParse(Console.ReadLine(), out selectInt) || selectInt < 0 || selectInt > Inventory.Count)
             {
                 Console.WriteLine("Invalid item number. Try again.");
             }
@@ -153,7 +149,7 @@ namespace purchase_list_group2
             {
                 return;
             }
-            StoreItem storeItem = inventory[selectInt - 1];
+            StoreItem storeItem = Inventory[selectInt - 1];
             Console.WriteLine($"\nThe current item in the inventory is {storeItem.Name}. Enter the new item details:");
             Console.Write("New name: ");
             string newName = Console.ReadLine();
@@ -203,7 +199,7 @@ namespace purchase_list_group2
             {
                 Console.WriteLine("Enter the end date (yyyy-mm-dd):");
             } while (!DateTime.TryParse(Console.ReadLine(), out endDate) || endDate <= startDate);
-            List<StoreItem> sortedInventory = inventory.OrderBy(item => item.Name).ToList();// Sorts inventory|alphabetically|name
+            List<StoreItem> sortedInventory = Inventory.OrderBy(item => item.Name).ToList();// Sorts inventory|alphabetically|name
             Console.WriteLine("Select the item numbers to include in the campaign, separated by commas:");// Display inventory items|numbers
             for (int i = 0; i < sortedInventory.Count; i++)
             {
@@ -226,7 +222,7 @@ namespace purchase_list_group2
             double totalDiscountedPrice = 0.0;
             foreach (Guid id in selectedIDs)
             {
-                StoreItem item = inventory.Find(i => i.ItemID == id);
+                StoreItem item = Inventory.Find(i => i.ItemID == id);
                 double discountedPrice = item.Price - (item.Price * (discount / 100));
                 Console.WriteLine($"{item.Name} ({item.Price:C}) - {discount}% = {discountedPrice:C}");
                 totalDiscountedPrice += discountedPrice;
@@ -260,7 +256,7 @@ namespace purchase_list_group2
 
         public void viewStoreItems()
         {
-            if (inventory.Count == 0)
+            if (Inventory.Count == 0)
             {
                 Console.WriteLine($"{Name} inventory is empty.");
                 Console.WriteLine("Press Enter to continue.");
@@ -271,9 +267,9 @@ namespace purchase_list_group2
                 Console.WriteLine($"Inventory for {Name}:");
                 Console.WriteLine("No.".PadRight(6) + "Item".PadRight(20) + "Price per item".PadRight(15));
                 Console.WriteLine("----".PadRight(6) + "--------------------".PadRight(20) + "--------------".PadRight(15));
-                for (int i = 0; i < inventory.Count; i++)
+                for (int i = 0; i < Inventory.Count; i++)
                 {
-                    StoreItem item = inventory[i];
+                    StoreItem item = Inventory[i];
                     Console.WriteLine($"{i + 1}".PadRight(6) + $"{item.Name}".PadRight(20) + $"{item.Price}".PadRight(15));
                 }
                 Console.WriteLine("Press Enter to continue.");
@@ -302,7 +298,7 @@ namespace purchase_list_group2
                     double totalDiscount = 0;
                     foreach (Guid id in itemIDs)
                     {
-                        StoreItem item = inventory.Find(i => i.ItemID == id);
+                        StoreItem item = Inventory.Find(i => i.ItemID == id);
                         double itemDiscount = item.Price - (item.Price * (discount / 100));
                         Console.WriteLine($"Before discount {item.Name} ({item.Price:C} | You save = {(item.Price - itemDiscount):C})");
                         totalDiscount += itemDiscount;

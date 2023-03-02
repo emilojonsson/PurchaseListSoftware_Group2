@@ -178,7 +178,7 @@ namespace purchase_list_group2
                     Console.WriteLine("Enter the quantity of the item to add:");
                     if (double.TryParse(Console.ReadLine(), out double quantity))
                     {
-                        var itemToAdd = new ShoppingListItem(storeList[selectInt].inventory[selectItem - 1], quantity);
+                        var itemToAdd = new ShoppingListItem(storeList[selectInt].Inventory[selectItem - 1], quantity);
                         newTemplate.ItemList.Add(itemToAdd);
                         Console.WriteLine($"Added {itemToAdd.Quantity} {itemToAdd.Unit} to the template");
                     }
