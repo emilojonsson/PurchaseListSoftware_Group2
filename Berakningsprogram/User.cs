@@ -14,7 +14,7 @@ namespace purchase_list_group2
     public class User
     {
         [DataMember]
-        private bool emailEdited = false; // new private field for editContactInformation() 
+        public bool EmailEdited { get; set; } = false; 
         [DataMember]
         public string? Name { get; set; }
         [DataMember]
@@ -32,34 +32,11 @@ namespace purchase_list_group2
         public User(string name, string email, bool systemAdminstrator)
         {
             Name = name;
-            UserID = new Guid();
+            UserID = Guid.NewGuid();
             Email = email;
             SystemAdminstrator = systemAdminstrator;
         }
-        public void createAccount()//"1 Add customer account"); SA MENU
-        {
-            //Console.WriteLine("Enter the name:");
-            //Name = Console.ReadLine();
-
-            //Console.WriteLine("Enter the email address:");
-            //Email = Console.ReadLine();
-
-            //Console.WriteLine("Enter the user ID (press Enter to skip):");
-            //string userIdInput = Console.ReadLine();
-
-            //if (Guid.TryParse(userIdInput, out Guid result))
-            //{
-            //    UserID = result;
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Warning: User ID not provided. Account will be locked until a valid User ID is provided.");
-            //    Console.WriteLine("Press [Enter] to continue..");
-            //    Console.ReadLine();
-            //}
-        }
-
-        public void addNewShoppingList(User customer, List<Store> storeList)
+        public void addNewShoppingList(Guid UserID, List<Store> storeList)
         {
             Console.WriteLine("Do you wish to create the shoppinglist from a template [yes], if no just press any key...");
             if (Console.ReadLine()?.ToLower() == "yes")
@@ -81,7 +58,7 @@ namespace purchase_list_group2
 
                     Console.WriteLine("What do you want to call the shoppinglist?");
                     string shoppingListName = Console.ReadLine();
-                    ShoppingLists.Add(new ShoppingList(shoppingListName, customer, storeList[selectInt]));
+                    ShoppingLists.Add(new ShoppingList(shoppingListName, UserID, storeList[selectInt]));
                 }
                 catch (Exception ex)
                 {
@@ -162,7 +139,7 @@ namespace purchase_list_group2
 
             Console.WriteLine("Enter a name for the new template:");
             string templateName = Console.ReadLine();
-            var newTemplate = new ShoppingList(templateName, null, storeList[selectInt]);
+            var newTemplate = new ShoppingList(templateName, UserID, storeList[selectInt]);
 
             Console.WriteLine($"Adding items to template {templateName} at store {storeList[selectInt].Name}");
             while (true)
@@ -178,7 +155,7 @@ namespace purchase_list_group2
                     Console.WriteLine("Enter the quantity of the item to add:");
                     if (double.TryParse(Console.ReadLine(), out double quantity))
                     {
-                        var itemToAdd = new ShoppingListItem(storeList[selectInt].Inventory[selectItem - 1], quantity);
+                        var itemToAdd = new ShoppingListItem(storeList[selectInt].Inventory[selectItem - 1], quantity, UserID);
                         newTemplate.ItemList.Add(itemToAdd);
                         Console.WriteLine($"Added {itemToAdd.Quantity} {itemToAdd.Unit} to the template");
                     }
@@ -198,10 +175,9 @@ namespace purchase_list_group2
             }
             addNewTemplates(storeList);
         }
-
         public void editContactInformation()
         {
-            if (emailEdited) // check if email has already been edited
+            if (EmailEdited)
             {
                 Console.WriteLine("Email has already been edited and cannot be updated again.\nPress [Enter] to exit.");
                 Console.ReadLine();
@@ -213,21 +189,20 @@ namespace purchase_list_group2
             this.Email = newemail;
             Console.WriteLine($"You successfully changed your email to {this.Email}\nPress [Enter] to exit.");
             Console.ReadLine();
-            emailEdited = true; // set emailEdited to true
+            EmailEdited = true; 
         }
-
-
-
-        public void removeUser()
+        public void removeUser(List<User> users, User customer)
         {
-            /*foreach (User user in database)//database?
+            int removeUser = 0;
+            foreach (User user in users)
             {
-                if(this.userID == user.userID)
+                if (customer.UserID == user.UserID)
                 {
-                        user.delete? 
+                    break;
                 }
+                removeUser++;
             }
-            */
+            users.Remove(users[removeUser]);
         }
         public void viewAllShoppingLists()
         {
@@ -266,7 +241,7 @@ namespace purchase_list_group2
                 }
                 int templateChoice = int.Parse(Console.ReadLine()) - 1;
                 ShoppingList template = Template[templateChoice];
-                ShoppingList newShoppingList = new ShoppingList(template.Name, this, new Store("MyStore"));
+                ShoppingList newShoppingList = new ShoppingList(template.Name, UserID, new Store("MyStore"));
                 ShoppingLists.Add(newShoppingList);
                 Console.WriteLine($"New shopping list '{newShoppingList.Name}' created from template '{template.Name}':");
                 Console.WriteLine("Press Enter to continue.");

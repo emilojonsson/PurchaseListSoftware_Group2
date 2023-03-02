@@ -16,7 +16,9 @@ namespace purchase_list_group2
         public EnumStatus Status { get; set; }
         [DataMember]
         public DateTime PurchaseDate { get; set; }//Customer Statistics in viewHistoricalPurchases()
-        public ShoppingListItem(StoreItem item, double quantity)
+        [DataMember]
+        public Guid CustomerID { get; set; }
+        public ShoppingListItem(StoreItem item, double quantity, Guid customerID)
         {
             this.Quantity = quantity;
             this.Name = item.Name;
@@ -25,6 +27,7 @@ namespace purchase_list_group2
             this.ItemID = Guid.NewGuid();
             this.Unit = item.Unit;
             this.Status = EnumStatus.NotPicked;
+            this.CustomerID = customerID;
         }
 
         public enum EnumStatus

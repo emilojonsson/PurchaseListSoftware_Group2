@@ -5,11 +5,45 @@ namespace purchase_list_group2
 {
     public class Program
     {
-        static Store selectStore(List<Store> storeList)
+        static void createAccount(Database dataObject)
+        {
+            Console.WriteLine("Enter the name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter the email address:");
+            string email = Console.ReadLine();
+            dataObject.UserObjects.Add(new User(name, email, false));
+            Console.WriteLine("The user was added");
+        }
+        static User selectUser(List<User> users)
+        {
+            int intUser = 0;
+            int selectUser = 1;
+            foreach (User user in users) 
+            {
+                Console.WriteLine($"{selectUser}, {user.Name}");
+                selectUser++;
+            }
+            do
+            {
+                Console.WriteLine("Select user:");
+                try
+                {
+                    intUser = int.Parse(Console.ReadLine()) - 1;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("The input was not in correct format, try again");
+                }
+            }
+            while (intUser < 0 || intUser >= users.Count);
+            return users[intUser];
+
+        }
+        static Store selectStore(Database dataObject)
         {
             int intStore = 0;
             int storeIndex = 1;
-            foreach (Store store in storeList)
+            foreach (Store store in dataObject.StoreObjects)
             {
                 Console.WriteLine($"{storeIndex}. {store.Name}");
                 storeIndex++;
@@ -26,14 +60,14 @@ namespace purchase_list_group2
                     Console.WriteLine("The input was not in correct format, try again");
                 }
             }
-            while (intStore < 0 || intStore >= storeList.Count); 
-            return storeList[intStore];
+            while (intStore < 0 || intStore >= dataObject.StoreObjects.Count); 
+            return dataObject.StoreObjects[intStore];
         }
-        static ShoppingList selectShoppingList(List<ShoppingList> shoppingLists)
+        static ShoppingList selectShoppingList(Database dataObject)
         {
             int intShoppingList = 0;
             int shoppingListIndex = 1;
-            foreach (ShoppingList shoppingList in shoppingLists)
+            foreach (ShoppingList shoppingList in dataObject.UserObjects[0].ShoppingLists)
             {
                 Console.WriteLine($"{shoppingListIndex}. {shoppingList.Name}");
                 shoppingListIndex++;
@@ -44,18 +78,17 @@ namespace purchase_list_group2
                 if (int.TryParse(Console.ReadLine(), out intShoppingList))
                 {
                     intShoppingList--;
-                    if (intShoppingList >= 0 && intShoppingList < shoppingLists.Count)
+                    if (intShoppingList >= 0 && intShoppingList < dataObject.UserObjects[0].ShoppingLists.Count)
                     {
-                        return shoppingLists[intShoppingList];
+                        return dataObject.UserObjects[0].ShoppingLists[intShoppingList];
                     }
                 }
                 Console.WriteLine("The input was not in correct format, try again");
             }
         }
-
-        static void SAMenu(User systemAdministrator, Database data)
+        static void SAMenu(Database dataObject)
         {
-            Console.WriteLine();
+            Console.Clear();
             Console.WriteLine("1 Add customer account");
             Console.WriteLine("2 Add store");
             Console.WriteLine("3 Add store item");
@@ -72,26 +105,25 @@ namespace purchase_list_group2
                 switch (menuChoice)
                 {
                     case 1:
-                        //User newUser = new User();
-                        //newUser.createAccount();
+                        createAccount(dataObject);
                         break;
                     case 2:
-                        addStore(data);
+                        addStore(dataObject);
                         break;
                     case 3:
-                        selectStore(data.StoreObjects).addStoreItem();
+                        selectStore(dataObject).addStoreItem();
                         break;
                     case 4:
-                        selectStore(data.StoreObjects).editStoreItem();
+                        selectStore(dataObject).editStoreItem();
                         break;
                     case 5:
-                        selectStore(data.StoreObjects).addCampaign();
+                        selectStore(dataObject).addCampaign();
                         break;
                     case 6:
-                        Store.removeStoreAndItems(data.StoreObjects);
+                        Store.removeStoreAndItems(dataObject.StoreObjects);
                         break;
                     case 7:
-                        selectStore(data.StoreObjects).viewHistoricalPurchases(data.StoreObjects);
+                        selectStore(dataObject).viewHistoricalPurchases(dataObject.StoreObjects);
                         break;
                     default:
                         if (menuChoice == 0)
@@ -111,21 +143,22 @@ namespace purchase_list_group2
                 Console.WriteLine("\nInvalid input. Select a number from the menu and press [Enter].");
             }
             // return to the SAMenu method to show the menu again
-            SAMenu(systemAdministrator, data);
+            SAMenu(dataObject);
         }
 
-        private static void addStore(Database data)
+        private static void addStore(Database dataObject)
         {
             Console.WriteLine("What's the name of the new store:");
             string storeName = Console.ReadLine();
-            data.StoreObjects.Add(new Store(storeName));
+            dataObject.StoreObjects.Add(new Store(storeName));
             Console.WriteLine($"Store '{storeName}' has been added.");
             Console.WriteLine("Press Enter to continue..");
             Console.ReadLine();
         }
 
-        static void CustomerMenu(User customer, List<Store> storeList, List<User> users)
+        static void CustomerMenu(Database dataObject, User customer)
         {
+            Console.Clear();
             Console.WriteLine("1 Edit customer account");
             Console.WriteLine("2 Remove customer account");
             Console.WriteLine();
@@ -156,31 +189,31 @@ namespace purchase_list_group2
                     customer.editContactInformation();
                     break;
                 case 2:
-                    //customer.removeUser();
+                    customer.removeUser(dataObject.UserObjects, customer);
                     break;
                 case 3:
-                    selectStore(storeList).viewStoreItems();
+                    selectStore(dataObject).viewStoreItems();
                     break;
                 case 4:
-                    selectStore(storeList).viewCampaigns();
+                    selectStore(dataObject).viewCampaigns();
                     break;
                 case 5:
-                    customer.addNewTemplates(storeList);
+                    customer.addNewTemplates(dataObject.StoreObjects);
                     break;
                 case 6:
-                    customer.addNewShoppingList(customer, storeList);
+                    customer.addNewShoppingList(customer.UserID, dataObject.StoreObjects);
                     break;
                 case 7:
-                    selectShoppingList(customer.ShoppingLists).addItem();
+                    selectShoppingList(dataObject).addItem();
                     break;
                 case 8:
-                    selectShoppingList(customer.ShoppingLists).removeItem();
+                    selectShoppingList(dataObject).removeItem();
                     break;
                 case 9:
                     customer.removeShoppingList();
                     break;
                 case 10:
-                    selectShoppingList(customer.ShoppingLists).editItem();
+                    selectShoppingList(dataObject).editItem();
                     break;
                 case 11:
                     customer.viewAllShoppingLists();
@@ -189,10 +222,10 @@ namespace purchase_list_group2
                     //customer.shareListWithOthers(users);
                     break;
                 case 13:
-                    selectShoppingList(customer.ShoppingLists).changeStatus();
+                    selectShoppingList(dataObject).changeStatus();
                     break;
                 case 14:
-                    ShoppingList shoppingList = selectShoppingList(customer.ShoppingLists);
+                    ShoppingList shoppingList = selectShoppingList(dataObject);
                     shoppingList.checkOutShoppingList(customer, shoppingList);
                     break;
                 case 15:
@@ -206,21 +239,8 @@ namespace purchase_list_group2
         {
             //Here we can create objects initialy when we don´t have the database
 
-            Database data1 = new Database();
-            data1.LoadDataBase();
-
-            User systemAdmin = new User("systemadmin", "system@gmail.com", true);
-            User customer1 = new User("svenne", "svenne@gmail.com", false);
-            //User customer2 = new User("benne", "benne@gmail.com", false);
-            List<User> users = new List<User>();
-            //users.Add(systemAdmin);
-            //users.Add(customer1);
-            //users.Add(customer2);
-            List<Store> storeList = new List<Store>();
-            data1.StoreObjects = new List<Store>();
-            //data1.UserObjects = new List<User>();
-            data1.UserObjects.Add(systemAdmin);
-
+            Database dataObject = new Database();
+            dataObject.LoadDataBase();
             bool loop = true;
             while (loop)
             {
@@ -237,14 +257,15 @@ namespace purchase_list_group2
                     switch (menuChoice)
                     {
                         case 1:
-                            SAMenu(systemAdmin, data1);
+                            SAMenu(dataObject);
                             break;
                         case 2:
-                            CustomerMenu(customer1, storeList, users);
+                            User customer = selectUser(dataObject.UserObjects);
+                            CustomerMenu(dataObject, customer);
                             break;
                         case 0:
                             loop = false;
-                            data1.SaveToDataBase();
+                            dataObject.SaveToDataBase();
                             break;
                         default:
                             Console.WriteLine("Invalid input. Please enter a valid menu choice.");

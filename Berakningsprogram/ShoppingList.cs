@@ -20,18 +20,18 @@ namespace purchase_list_group2
         [DataMember]
         public List<ShoppingListItem> ItemList { get; set; }
         [DataMember]
-        public User Customer { get; set; }
+        public Guid CustomerID { get; set; }
         [DataMember]
         public Status StatusShoppinglist { get; set; }
         [DataMember]
         public Store Store { get; set; }
-        public ShoppingList(string name, User customer, Store store) 
+        public ShoppingList(string name, Guid customer, Store store) 
         {
             this.Name = name;
             this.ShoppingListID = Guid.NewGuid();
             this.TotalCost = 0;
             this.ItemList = new List<ShoppingListItem>();
-            this.Customer = customer;
+            this.CustomerID = customer;
             this.StatusShoppinglist = Status.NotPurchased;
             this.Store = store;
         }
@@ -49,7 +49,7 @@ namespace purchase_list_group2
                 int selectInt = int.Parse(Console.ReadLine()) - 1;
                 Console.WriteLine("How many/much of the item do you wish to add:");
                 double quantity = double.Parse(Console.ReadLine());
-                ItemList.Add(new ShoppingListItem(Store.Inventory[selectInt], quantity));
+                ItemList.Add(new ShoppingListItem(Store.Inventory[selectInt], quantity, CustomerID));
                 Console.WriteLine($"{ItemList[ItemList.Count - 1].ToString()}, has been added to the list. Press any key to continue...");
             }
             catch (Exception ex)
