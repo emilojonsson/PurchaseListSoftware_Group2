@@ -1,7 +1,11 @@
 ﻿namespace Berakningsprogram
 {
-    internal class Program
+    public class Program
     {
+        public void add()
+        {
+            Console.WriteLine("hej");
+        }
         static void Main(string[] args)
         {
             Console.WriteLine("Hej och välkommen till beräkningsprogrammet.");
