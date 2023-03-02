@@ -202,16 +202,11 @@
         static void Main(string[] args)
         {
             //Here we can create objects initialy when we don´t have the database
-            //SomethingDatabaseContext DB = new SomethingDatabaseContext(); // Any use of the Database will need this.
 
             User systemAdmin = new User("systemadmin", "system@gmail.com", true);
             User customer1 = new User("svenne", "svenne@gmail.com", false);
             User customer2 = new User("benne", "benne@gmail.com", false);
             List<User> users = new List<User>();
-            User user = new User("Carl", "carl.carnmo@gmail.com", false);
-            Guid userID = new Guid("00000000000000000000000000000000");
-            Console.WriteLine(user.UserID.ToString());
-            //DB.RemoveUser(userID);
             users.Add(systemAdmin);
             users.Add(customer1);
             users.Add(customer2);

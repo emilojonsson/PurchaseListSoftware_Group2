@@ -17,61 +17,61 @@ namespace Gym_Booking_Manager
 {
     internal class Database
     {
-        public List<Equipment> equipmentObjects { get; set; } = new List<Equipment>();
-        public List<Space> spaceObjects { get; set; } = new List<Space>();
-        public List<Trainer> trainerObjects { get; set; } = new List<Trainer>();
-        public List<Activity> activities { get; set; } = new List<Activity>();
-        public List<ReservingEntity> userObjects { get; set; } = new List<ReservingEntity>();
-        public List<RestrictedObjects> restrictedObjects { get; set; } = new List<RestrictedObjects>();
-        public List<RestrictedObjects> restrictedList { get; set; } = new List<RestrictedObjects>();
+        //public List<Equipment> equipmentObjects { get; set; } = new List<Equipment>();
+        //public List<Space> spaceObjects { get; set; } = new List<Space>();
+        //public List<Trainer> trainerObjects { get; set; } = new List<Trainer>();
+        //public List<Activity> activities { get; set; } = new List<Activity>();
+        //public List<ReservingEntity> userObjects { get; set; } = new List<ReservingEntity>();
+        //public List<RestrictedObjects> restrictedObjects { get; set; } = new List<RestrictedObjects>();
+        //public List<RestrictedObjects> restrictedList { get; set; } = new List<RestrictedObjects>();
 
-        public GroupSchedule schedule { get; set; } = new GroupSchedule();
-        public RestrictedObjects restricted { get; set; } = new RestrictedObjects();
-        public ReservingEntity user { get; set; } = new ReservingEntity();
-        public List<Activity> templateActivityObjects { get; set; } = new List<Activity>();
+        //public GroupSchedule schedule { get; set; } = new GroupSchedule();
+        //public RestrictedObjects restricted { get; set; } = new RestrictedObjects();
+        //public ReservingEntity user { get; set; } = new ReservingEntity();
+        //public List<Activity> templateActivityObjects { get; set; } = new List<Activity>();
 
-        public void LoadDataBase()
-        {
-            equipmentObjects = LoadViaDataContractSerialization<List<Equipment>>("equipmentObjects.xml");
-            spaceObjects = LoadViaDataContractSerialization<List<Space>>("spaceObjects.xml");
-            trainerObjects = LoadViaDataContractSerialization<List<Trainer>>("trainerObjects.xml");
-            userObjects = LoadViaDataContractSerialization<List<ReservingEntity>>("user.xml");
-            activities = LoadViaDataContractSerialization<List<Activity>>("activity.xml");
-            restrictedList = LoadViaDataContractSerialization<List<RestrictedObjects>>("restrictedList.xml");
-            templateActivityObjects = LoadViaDataContractSerialization<List<Activity>>("templateActivities.xml");
-            if (activities != null)
-            {
-                foreach (Activity activity in activities)
-                {
-                    schedule.activities.Add(activity);
-                }
-            }
-            else
-                Console.WriteLine("No activities were loaded!");
-        }
+        //public void LoadDataBase()
+        //{
+        //    equipmentObjects = LoadViaDataContractSerialization<List<Equipment>>("equipmentObjects.xml");
+        //    spaceObjects = LoadViaDataContractSerialization<List<Space>>("spaceObjects.xml");
+        //    trainerObjects = LoadViaDataContractSerialization<List<Trainer>>("trainerObjects.xml");
+        //    userObjects = LoadViaDataContractSerialization<List<ReservingEntity>>("user.xml");
+        //    activities = LoadViaDataContractSerialization<List<Activity>>("activity.xml");
+        //    restrictedList = LoadViaDataContractSerialization<List<RestrictedObjects>>("restrictedList.xml");
+        //    templateActivityObjects = LoadViaDataContractSerialization<List<Activity>>("templateActivities.xml");
+        //    if (activities != null)
+        //    {
+        //        foreach (Activity activity in activities)
+        //        {
+        //            schedule.activities.Add(activity);
+        //        }
+        //    }
+        //    else
+        //        Console.WriteLine("No activities were loaded!");
+        //}
 
-        public void SaveToDataBase()
-        {
-            if (activities == null)
-            {
-                Console.WriteLine("No activities were saved to Database");
-            }
-            else
-            {
-                activities.Clear();
-                foreach (Activity activity in schedule.activities)
-                {
-                    activities.Add(activity);
-                }
-                SaveViaDataContractSerialization(activities, "activity.xml");
-            }
-            SaveViaDataContractSerialization(userObjects, "user.xml");
-            SaveViaDataContractSerialization(restrictedList, "restrictedList.xml");
-            SaveViaDataContractSerialization(spaceObjects, "spaceObjects.xml");
-            SaveViaDataContractSerialization(trainerObjects, "trainerObjects.xml");
-            SaveViaDataContractSerialization(equipmentObjects, "equipmentObjects.xml");
-            SaveViaDataContractSerialization(templateActivityObjects, "templateActivities.xml");
-        }
+        //public void SaveToDataBase()
+        //{
+        //    if (activities == null)
+        //    {
+        //        Console.WriteLine("No activities were saved to Database");
+        //    }
+        //    else
+        //    {
+        //        activities.Clear();
+        //        foreach (Activity activity in schedule.activities)
+        //        {
+        //            activities.Add(activity);
+        //        }
+        //        SaveViaDataContractSerialization(activities, "activity.xml");
+        //    }
+        //    SaveViaDataContractSerialization(userObjects, "user.xml");
+        //    SaveViaDataContractSerialization(restrictedList, "restrictedList.xml");
+        //    SaveViaDataContractSerialization(spaceObjects, "spaceObjects.xml");
+        //    SaveViaDataContractSerialization(trainerObjects, "trainerObjects.xml");
+        //    SaveViaDataContractSerialization(equipmentObjects, "equipmentObjects.xml");
+        //    SaveViaDataContractSerialization(templateActivityObjects, "templateActivities.xml");
+        //}
 
         public static string FilePath(string fileName)
         {

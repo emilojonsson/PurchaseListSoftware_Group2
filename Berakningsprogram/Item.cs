@@ -17,18 +17,6 @@ namespace inköpslista_grupp2
         public UnitEnum Unit { get; set; }
         public double Price { get; set; }
         public Guid ItemID { get; set; }
-        //public Item(string name, string category, UnitEnum unit, double price)
-        //{
-        //    Name = name;
-        //    Category = category;
-        //    Unit = unit;
-        //    Price = price;
-        //    ItemID = Guid.NewGuid();
-        //}
-        public string CSVify()
-        {
-            return $"{nameof(Name)}:{Name},{nameof(Category)}:{Category},{nameof(Unit)}:{Unit},{nameof(Price)}:{Price},{nameof(ItemID)}:{ItemID}";
-        }
         public enum UnitEnum
         {
             Pcs = 1,

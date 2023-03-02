@@ -9,7 +9,7 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace inköpslista_grupp2
 {
-    public class User : ICSVable
+    public class User
     {
         private bool emailEdited = false; // new private field for editContactInformation() 
         public string? Name { get; set; }
