@@ -12,32 +12,10 @@ namespace purchase_list_group2
         {
             StoreObjects = LoadViaDataContractSerialization<List<Store>>("storeObjects.xml");
             UserObjects = LoadViaDataContractSerialization<List<User>>("userObjects.xml");
-            //if (activities != null)
-            //{
-            //    foreach (Activity activity in activities)
-            //    {
-            //        schedule.activities.Add(activity);
-            //    }
-            //}
-            //else
-            //    Console.WriteLine("No activities were loaded!");
         }
 
         public void SaveToDataBase()
         {
-            //if (activities == null)
-            //{
-            //    Console.WriteLine("No activities were saved to Database");
-            //}
-            //else
-            //{
-            //    activities.Clear();
-            //    foreach (Activity activity in schedule.activities)
-            //    {
-            //        activities.Add(activity);
-            //    }
-            //    SaveViaDataContractSerialization(activities, "activity.xml");
-            //}
             SaveViaDataContractSerialization(UserObjects, "userObjects.xml");
             SaveViaDataContractSerialization(StoreObjects, "storeObjects.xml");
         }

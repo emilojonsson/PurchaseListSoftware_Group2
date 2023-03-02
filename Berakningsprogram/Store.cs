@@ -21,15 +21,12 @@ namespace purchase_list_group2
         [DataMember]
         public List<Dictionary<string, object>> Campaigns { get; set; } = new List<Dictionary<string, object>>();
         [DataMember]
-        public List<Dictionary<string, object>> Purchases { get; set; } = new List<Dictionary<string, object>>();
-        [DataMember]
         public List<ShoppingListItem> PurchasedItems { get; set; } = new List<ShoppingListItem>();
 
         public Store(string name)
         {
             Name = name;
         }
-
         public static void removeStoreAndItems(List<Store> storeList)
         {
             Console.WriteLine("Select the number of the store that you wish to remove:");
@@ -79,19 +76,6 @@ namespace purchase_list_group2
 
         public void addStoreItem()
         {
-            string userRole = "";
-            while (userRole != "1" && userRole != "2")
-            {
-                Console.WriteLine("\nChoose your role:");
-                Console.WriteLine("1. Store Manager");
-                Console.WriteLine("2. Employee");
-                userRole = Console.ReadLine();
-                if (userRole != "1" && userRole != "2")
-                {
-                    Console.WriteLine("Invalid selection. Try again.");
-                }
-            }
-
             while (true)
             {
                 Console.WriteLine("\nType the item details you are adding:");
@@ -105,28 +89,23 @@ namespace purchase_list_group2
                 {
                     Console.WriteLine("Invalid input. Enter a valid number.");
                 }
-                Console.Write("Quantity#: ");
-                int quantity;
-                while (!int.TryParse(Console.ReadLine(), out quantity) || quantity <= 0)
-                {
-                    Console.WriteLine("Invalid input. Enter a positive integer.");
-                }
                 Console.WriteLine("\nSelect the unit of the item:");
-                Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Pcs}. Pcs");
-                Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Litres}. Litres");
-                Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Gram}. Gram");
+                Console.WriteLine($"1. Pcs");
+                Console.WriteLine($"2. Litres");
+                Console.WriteLine($"3. Gram");
                 ShoppingListItem.UnitEnum unit;
                 while (!Enum.TryParse(Console.ReadLine(), out unit))
                 {
                     Console.WriteLine("Invalid selection. Try again.");
-                    Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Pcs}. Pcs");
-                    Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Litres}. Litres");
-                    Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Gram}. Gram");
+                    Console.WriteLine($"1. Pcs");
+                    Console.WriteLine($"2. Litres");
+                    Console.WriteLine($"3. Gram");
                 }
+                int intUnit = (int)unit - 1;
+                unit = (ShoppingListItem.UnitEnum)intUnit; 
                 StoreItem storeItem = new StoreItem(name, category, pricePerItem, unit);
                 Inventory.Add(storeItem);
-                double totalPrice = pricePerItem * quantity;
-                Console.WriteLine($"\nSummary details of item added:\nQty: {quantity}\nItem name: {storeItem.Name}\nCategory: {storeItem.Category}\nStore Name: {Name}\nTotal price: {totalPrice}kr\nUnit type: {storeItem.Unit}");
+                Console.WriteLine($"\nSummary details of item added:\nItem name: {storeItem.Name}\nCategory: {storeItem.Category}\nStore Name: {Name}\nUnit type: {storeItem.Unit}");
 
                 Console.WriteLine("\nPress 1 to add another item or [ENTER] to exit.");
                 if (Console.ReadLine() != "1")
@@ -138,45 +117,49 @@ namespace purchase_list_group2
 
         public void editStoreItem()
         {
-            viewStoreItems();
-            Console.WriteLine("\nWhat item number do you want to edit? [Press 0 to Exit]");
-            int selectInt;
-            while (!int.TryParse(Console.ReadLine(), out selectInt) || selectInt < 0 || selectInt > Inventory.Count)
+            if (viewStoreItems())
             {
-                Console.WriteLine("Invalid item number. Try again.");
-            }
-            if (selectInt == 0)
-            {
-                return;
-            }
-            StoreItem storeItem = Inventory[selectInt - 1];
-            Console.WriteLine($"\nThe current item in the inventory is {storeItem.Name}. Enter the new item details:");
-            Console.Write("New name: ");
-            string newName = Console.ReadLine();
-            Console.Write("New category: ");
-            string newCategory = Console.ReadLine();
-            Console.Write("New price: ");
-            double newPrice = double.Parse(Console.ReadLine());
-            Console.WriteLine("Select the unit of the item:");
-            Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Pcs}. Pcs");
-            Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Litres}. Litres");
-            Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Gram}. Gram");
-            ShoppingListItem.UnitEnum newUnit;
-            while (!Enum.TryParse(Console.ReadLine(), out newUnit))
-            {
-                Console.WriteLine("Invalid selection. Try again.");
+                Console.WriteLine("\nWhat item number do you want to edit? [Press 0 to Exit]");
+                int selectInt;
+                while (!int.TryParse(Console.ReadLine(), out selectInt) || selectInt < 0 || selectInt > Inventory.Count)
+                {
+                    Console.WriteLine("Invalid item number. Try again.");
+                }
+                if (selectInt == 0)
+                {
+                    return;
+                }
+                StoreItem storeItem = Inventory[selectInt - 1];
+                Console.WriteLine($"\nThe current item in the inventory is {storeItem.Name}. Enter the new item details:");
+                Console.Write("New name: ");
+                string newName = Console.ReadLine();
+                Console.Write("New category: ");
+                string newCategory = Console.ReadLine();
+                Console.Write("New price: ");
+                double newPrice = double.Parse(Console.ReadLine());
+                Console.WriteLine();
                 Console.WriteLine("Select the unit of the item:");
-                Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Pcs}. Pcs");
-                Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Litres}. Litres");
-                Console.WriteLine($"{(int)ShoppingListItem.UnitEnum.Gram}. Gram");
+                Console.WriteLine($"1. Pcs");
+                Console.WriteLine($"2. Litres");
+                Console.WriteLine($"3. Gram");
+                ShoppingListItem.UnitEnum newUnit;
+                while (!Enum.TryParse(Console.ReadLine(), out newUnit))
+                {
+                    Console.WriteLine("Invalid selection. Try again.");
+                    Console.WriteLine("Select the unit of the item:");
+                    Console.WriteLine($"1. Pcs");
+                    Console.WriteLine($"2. Litres");
+                    Console.WriteLine($"3. Gram");
+                }
+                int intUnit = (int)newUnit - 1;
+                newUnit = (ShoppingListItem.UnitEnum)intUnit;
+                storeItem.Name = newName;
+                storeItem.Category = newCategory;
+                storeItem.Price = newPrice;
+                storeItem.Unit = newUnit;
+                Console.WriteLine($"\n{storeItem.Name} in {Name} inventory was updated. Press any key to continue...");
             }
-            storeItem.Name = newName;
-            storeItem.Category = newCategory;
-            storeItem.Price = newPrice;
-            storeItem.Unit = newUnit;
-            Console.WriteLine($"\n{storeItem.Name} in {Name} inventory was updated.");
-            Console.WriteLine("Press Enter to continue..");
-            Console.ReadLine();
+                
         }
 
         public void addCampaign()
@@ -254,13 +237,12 @@ namespace purchase_list_group2
             Console.WriteLine($"{name} was added to {Name} campaigns.");
         }
 
-        public void viewStoreItems()
+        public bool viewStoreItems()
         {
             if (Inventory.Count == 0)
             {
-                Console.WriteLine($"{Name} inventory is empty.");
-                Console.WriteLine("Press Enter to continue.");
-                Console.ReadLine();
+                Console.WriteLine($"{Name} inventory is empty. Press any key to continue...");
+                return false;
             }
             else
             {
@@ -272,9 +254,8 @@ namespace purchase_list_group2
                     StoreItem item = Inventory[i];
                     Console.WriteLine($"{i + 1}".PadRight(6) + $"{item.Name}".PadRight(20) + $"{item.Price}".PadRight(15));
                 }
-                Console.WriteLine("Press Enter to continue.");
-                Console.ReadLine();
             }
+            return true;
         }
 
         public void viewCampaigns()
@@ -303,61 +284,17 @@ namespace purchase_list_group2
                         Console.WriteLine($"Before discount {item.Name} ({item.Price:C} | You save = {(item.Price - itemDiscount):C})");
                         totalDiscount += itemDiscount;
                     }
-                    Console.WriteLine($"Current Price: {totalDiscount:C}");
+                    Console.WriteLine($"Current Price: {totalDiscount:C}.\nPress any key to continue...");
                 }
             }
-            Console.WriteLine("Press Enter to Exit.");
-            Console.ReadLine();
         }
 
-        public void viewHistoricalPurchases(List<Store> stores)
+        public void viewHistoricalPurchases()
         {
             foreach(ShoppingListItem item in PurchasedItems)
             {
                 Console.WriteLine(item.Name);
             }
-        //    Console.WriteLine("All your historical purchases:");
-
-        //    foreach (ShoppingListItem item in stores.SelectMany(store => store.PurchasedItems?.Where(purchasedItem => purchasedItem.Status == ShoppingListItem.EnumStatus.Purchased) ?? new List<ShoppingListItem>()))
-        //    {
-        //        Console.WriteLine(item);
-        //    }
-
-        //    Console.WriteLine("\nSales statistics per store:");
-
-        //    foreach (Store store in stores)
-        //    {
-        //        Console.WriteLine($"\n{store.Name}");
-
-        //        IEnumerable<ShoppingListItem> purchasedItems = store.PurchasedItems?.Where(item => item.Status == ShoppingListItem.EnumStatus.Purchased);
-        //        int purchasedItemCountForStore = purchasedItems?.Sum(item => (int)item.Quantity) ?? 0;
-        //        Console.WriteLine($"Purchased items count: {purchasedItemCountForStore}");
-
-        //        if (purchasedItems != null && purchasedItems.Any())
-        //        {
-        //            Dictionary<string, double> salesByProduct = purchasedItems.GroupBy(item => item.Name).ToDictionary(g => g.Key, g => g.Sum(item => item.Quantity));
-        //            IEnumerable<KeyValuePair<string, double>> topSellingProducts = salesByProduct.OrderByDescending(kvp => kvp.Value).Take(3);
-        //            IEnumerable<KeyValuePair<string, double>> leastSellingProducts = salesByProduct.OrderBy(kvp => kvp.Value).Take(3);
-
-        //            Console.WriteLine("Top 3 most purchased products:");
-        //            foreach (KeyValuePair<string, double> product in topSellingProducts)
-        //            {
-        //                Item item = purchasedItems.First(item => item.Name == product.Key);
-        //                Console.WriteLine($"{product.Key} - {item.Category}");
-        //            }
-
-        //            Console.WriteLine("\n3 least purchased products:");
-        //            foreach (KeyValuePair<string, double> product in leastSellingProducts)
-        //            {
-        //                Item item = purchasedItems.First(item => item.Name == product.Key);
-        //                Console.WriteLine($"{product.Key} - {item.Category}");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine($"No purchased items for {store.Name}.");
-        //        }
-        //    }
         }
     }
 }   

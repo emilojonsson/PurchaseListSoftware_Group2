@@ -77,7 +77,7 @@ namespace purchase_list_group2
             bool loop = true;
             while (loop)
             {
-                Console.WriteLine("Work finished with this shopping list [yes], or continue add more items (just press any key)...");
+                Console.WriteLine("Finished [yes], or continue add items (just press any key)...");
                 if (Console.ReadLine()?.ToLower() != "yes")
                 {
                     ShoppingLists[ShoppingLists.Count - 1].addItem();
@@ -103,7 +103,7 @@ namespace purchase_list_group2
                 try
                 {
                     int intRemoveList = int.Parse(Console.ReadLine()) - 1;
-                    Console.WriteLine($"You removed list: {ShoppingLists[intRemoveList].Name}\nPress [Enter] to continue..]");
+                    Console.WriteLine($"You removed list: {ShoppingLists[intRemoveList].Name}\nPress any key to continue...");
                     ShoppingLists.RemoveAt(intRemoveList);
                 }
                 catch (Exception ex)
@@ -118,14 +118,12 @@ namespace purchase_list_group2
                     }
                     Console.WriteLine("no shopping list was removed");
                 }
-                Console.ReadLine();
             }
         }
         public void shareListWithOthers(List<User> users)
         {
             throw new NotImplementedException();
         }
-       
         public void addNewTemplates(List<Store> storeList)
         {
             Console.WriteLine("Choose a store for the new template:");
@@ -179,7 +177,7 @@ namespace purchase_list_group2
         {
             if (EmailEdited)
             {
-                Console.WriteLine("Email has already been edited and cannot be updated again.\nPress [Enter] to exit.");
+                Console.WriteLine("Email has already been edited and cannot be updated again.\nPress any key to continue...");
                 Console.ReadLine();
                 return;
             }
@@ -187,8 +185,7 @@ namespace purchase_list_group2
             Console.Write($"New email:");
             string newemail = Console.ReadLine();
             this.Email = newemail;
-            Console.WriteLine($"You successfully changed your email to {this.Email}\nPress [Enter] to exit.");
-            Console.ReadLine();
+            Console.WriteLine($"You successfully changed your email to {this.Email}\nPress any key to continue...");
             EmailEdited = true; 
         }
         public void removeUser(List<User> users, User customer)
@@ -203,13 +200,13 @@ namespace purchase_list_group2
                 removeUser++;
             }
             users.Remove(users[removeUser]);
+            Console.WriteLine("User removed!\nPress any key to continue...");
         }
         public void viewAllShoppingLists()
         {
             if (ShoppingLists.Count == 0) 
             {
-                Console.WriteLine("No shopping lists to view");
-                Console.WriteLine("Press [Enter] to go back");
+                Console.WriteLine("No shopping lists to view\nPress any key to continue...");
             }
             else
             {
@@ -219,7 +216,6 @@ namespace purchase_list_group2
                     list.viewShoppingList();
                 }
             }
-            Console.ReadLine();
         }
         public void addTemplate()
         {
@@ -243,9 +239,7 @@ namespace purchase_list_group2
                 ShoppingList template = Template[templateChoice];
                 ShoppingList newShoppingList = new ShoppingList(template.Name, UserID, new Store("MyStore"));
                 ShoppingLists.Add(newShoppingList);
-                Console.WriteLine($"New shopping list '{newShoppingList.Name}' created from template '{template.Name}':");
-                Console.WriteLine("Press Enter to continue.");
-                Console.ReadLine();
+                Console.WriteLine($"New shopping list '{newShoppingList.Name}' created from template '{template.Name}':\nPress any key to continue...");
             }
         }
         public void viewHistoricalPurchases()
@@ -254,12 +248,12 @@ namespace purchase_list_group2
             foreach (ShoppingListItem item in PurchasedItems)
             {
                 Console.WriteLine($"Purchase date: {item.PurchaseDate.ToString("yyyy-MM-dd")}");
-                Console.WriteLine($"Item ID: {item.ItemID}");
+                Console.WriteLine($"Item ID: {item.Name}");
                 Console.WriteLine($"Quantities: {item.Quantity} {item.Unit}");
                 Console.WriteLine($"Cost: {item.Quantity * item.Price}");
                 Console.WriteLine();
             }
-            Console.ReadLine();
+            Console.WriteLine("Press any key to continue...");
         }
     }
 }

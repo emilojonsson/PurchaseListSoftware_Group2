@@ -25,9 +25,10 @@ namespace Berakningsprogram.Tests
             Store store1 = new Store("Ikea");
             StoreItem storeItem = new StoreItem(expectedName, expectedCategory, expectedPrice, expectedEnum);
             store1.Inventory.Add(storeItem);
-            ShoppingList shoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), store1);
+            User customer = new User("Pelle", "p@gmail.com", false);
+            ShoppingList shoppingList = new ShoppingList("the shopping list", customer.UserID, store1);
 
-            string simulateUserInMethod = "readLine\n" + "1\n" + "10\n" + "readLine\n";
+            string simulateUserInMethod = "1\n" + "10\n" + "readLine\n";
             StringReader srObject = new StringReader(simulateUserInMethod);
             Console.SetIn(srObject);
 
@@ -51,9 +52,10 @@ namespace Berakningsprogram.Tests
             Store store1 = new Store("Ikea");
             store1.Inventory.Add(expectedToRemoved);
             store1.Inventory.Add(expectedToRemain);
-            ShoppingList shoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), store1);
-            shoppingList.ItemList.Add(new ShoppingListItem(expectedToRemoved, 5));
-            shoppingList.ItemList.Add(new ShoppingListItem(expectedToRemain, 10));
+            User customer = new User("Pelle", "p@gmail.com", false);
+            ShoppingList shoppingList = new ShoppingList("the shopping list", customer.UserID, store1);
+            shoppingList.ItemList.Add(new ShoppingListItem(expectedToRemoved, 5, customer.UserID));
+            shoppingList.ItemList.Add(new ShoppingListItem(expectedToRemain, 10, customer.UserID));
 
             string simulateUserInMethod = "1\n" + "readLine\n";
             StringReader srObject = new StringReader(simulateUserInMethod);
@@ -75,9 +77,10 @@ namespace Berakningsprogram.Tests
             Store store1 = new Store("Ikea");
             store1.Inventory.Add(expectedToEdit);
             store1.Inventory.Add(expectedNotEdit);
-            ShoppingList shoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), store1);
-            shoppingList.ItemList.Add(new ShoppingListItem(expectedToEdit, 5));
-            shoppingList.ItemList.Add(new ShoppingListItem(expectedNotEdit, 5));
+            User customer = new User("Pelle", "p@gmail.com", false);
+            ShoppingList shoppingList = new ShoppingList("the shopping list", customer.UserID, store1);
+            shoppingList.ItemList.Add(new ShoppingListItem(expectedToEdit, 5, customer.UserID));
+            shoppingList.ItemList.Add(new ShoppingListItem(expectedNotEdit, 5, customer.UserID));
 
             string simulateUserInMethod = "1\n" + "New name\n" + "10\n" + "readLine\n";
             StringReader srObject = new StringReader(simulateUserInMethod);
@@ -98,10 +101,11 @@ namespace Berakningsprogram.Tests
             StoreItem storeItem1 = new StoreItem("Article 1", "AAA", 1, Item.UnitEnum.Pcs);
             StoreItem storeItem2 = new StoreItem("Article 2", "BBB", 10, Item.UnitEnum.Pcs);
             StoreItem storeItem3 = new StoreItem("Article 3", "CCC", 100, Item.UnitEnum.Pcs);
-            ShoppingList shoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), new Store("Ikea"));
-            shoppingList.ItemList.Add(new ShoppingListItem(storeItem1, 1));
-            shoppingList.ItemList.Add(new ShoppingListItem(storeItem2, 1));
-            shoppingList.ItemList.Add(new ShoppingListItem(storeItem3, 1));
+            User customer = new User("Pelle", "p@gmail.com", false);
+            ShoppingList shoppingList = new ShoppingList("the shopping list", customer.UserID, new Store("Ikea"));
+            shoppingList.ItemList.Add(new ShoppingListItem(storeItem1, 1, customer.UserID));
+            shoppingList.ItemList.Add(new ShoppingListItem(storeItem2, 1, customer.UserID));
+            shoppingList.ItemList.Add(new ShoppingListItem(storeItem3, 1, customer.UserID));
             shoppingList.ItemList[0].Status = ShoppingListItem.EnumStatus.NotPicked;
             shoppingList.ItemList[1].Status = ShoppingListItem.EnumStatus.Picked;
             shoppingList.ItemList[2].Status = ShoppingListItem.EnumStatus.Purchased;
@@ -135,14 +139,15 @@ namespace Berakningsprogram.Tests
             StoreItem storeItem3 = new StoreItem(expectedSorted3, "AAA", 1, Item.UnitEnum.Pcs);
             StoreItem storeItem1 = new StoreItem(expectedSorted1, "AAA", 1, Item.UnitEnum.Pcs);
             StoreItem storeItem2 = new StoreItem(expectedSorted2, "BBB", 1, Item.UnitEnum.Pcs);
-            ShoppingList emptyShoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), new Store("Ikea"));
-            ShoppingList sortedShoppingList = new ShoppingList("the shopping list", new User("Pelle", "p@gmail.com", false), new Store("Ikea"));
-            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem6, 1));
-            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem5, 1));
-            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem4, 1));
-            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem3, 1));
-            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem1, 1));
-            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem2, 1));
+            User customer = new User("Pelle", "p@gmail.com", false);
+            ShoppingList emptyShoppingList = new ShoppingList("the shopping list", customer.UserID, new Store("Ikea"));
+            ShoppingList sortedShoppingList = new ShoppingList("the shopping list", customer.UserID, new Store("Ikea"));
+            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem6, 1, customer.UserID));
+            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem5, 1, customer.UserID));
+            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem4, 1, customer.UserID));
+            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem3, 1, customer.UserID));
+            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem1, 1, customer.UserID));
+            sortedShoppingList.ItemList.Add(new ShoppingListItem(storeItem2, 1, customer.UserID));
             sortedShoppingList.ItemList[0].Status = ShoppingListItem.EnumStatus.Purchased;
             sortedShoppingList.ItemList[1].Status = ShoppingListItem.EnumStatus.Purchased;
             sortedShoppingList.ItemList[2].Status = ShoppingListItem.EnumStatus.Picked;
@@ -173,15 +178,15 @@ namespace Berakningsprogram.Tests
             User customer = new User("Pelle", "p@gmail.com", false);
             StoreItem storeItem1 = new StoreItem("Article 1", "AAA", 1, Item.UnitEnum.Pcs);
             StoreItem storeItem2 = new StoreItem("Article 2", "AAA", 1, Item.UnitEnum.Pcs);
-            ShoppingList listToRemain = new ShoppingList("Shopping list A", customer, new Store("Ikea"));
-            ShoppingList listToRemove = new ShoppingList("Shopping list B", customer, new Store("Ikea"));
+            ShoppingList listToRemain = new ShoppingList("Shopping list A", customer.UserID, new Store("Ikea"));
+            ShoppingList listToRemove = new ShoppingList("Shopping list B", customer.UserID, new Store("Ikea"));
             customer.ShoppingLists.Add(listToRemain);
-            listToRemain.ItemList.Add(new ShoppingListItem(storeItem1, 1));
-            listToRemain.ItemList.Add(new ShoppingListItem(storeItem2, 1));
+            listToRemain.ItemList.Add(new ShoppingListItem(storeItem1, 1, customer.UserID));
+            listToRemain.ItemList.Add(new ShoppingListItem(storeItem2, 1, customer.UserID));
             listToRemain.ItemList[0].Status = ShoppingListItem.EnumStatus.Picked;
             listToRemain.ItemList[1].Status = ShoppingListItem.EnumStatus.NotPicked;
             customer.ShoppingLists.Add(listToRemove);
-            listToRemove.ItemList.Add(new ShoppingListItem(storeItem1, 1));
+            listToRemove.ItemList.Add(new ShoppingListItem(storeItem1, 1, customer.UserID));
             listToRemove.ItemList[0].Status = ShoppingListItem.EnumStatus.Picked;
 
             listToRemain.checkOutShoppingList(customer, listToRemain);
@@ -200,8 +205,9 @@ namespace Berakningsprogram.Tests
             ShoppingListItem.EnumStatus expectedStatus = ShoppingListItem.EnumStatus.Picked;
 
             StoreItem storeItem1 = new StoreItem("Article 1", "AAA", 1, Item.UnitEnum.Pcs);
-            ShoppingList shoppingList = new ShoppingList("Shopping list A", new User("Pelle", "p@gmail.com", false), new Store("Ikea"));
-            shoppingList.ItemList.Add(new ShoppingListItem(storeItem1, 1));
+            User customer = new User("Pelle", "p@gmail.com", false);
+            ShoppingList shoppingList = new ShoppingList("Shopping list A", customer.UserID, new Store("Ikea"));
+            shoppingList.ItemList.Add(new ShoppingListItem(storeItem1, 1, customer.UserID));
             shoppingList.ItemList[0].Status = ShoppingListItem.EnumStatus.NotPicked;
 
             string simulateUserInMethod = "1\n" + "readLine\n";

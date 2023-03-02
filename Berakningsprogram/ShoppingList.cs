@@ -42,29 +42,30 @@ namespace purchase_list_group2
         }
         public void addItem() 
         {
-            Store.viewStoreItems();
-            Console.WriteLine("Add the item from the list by entering the number related to it:");
-            try
+            if (Store.viewStoreItems())
             {
-                int selectInt = int.Parse(Console.ReadLine()) - 1;
-                Console.WriteLine("How many/much of the item do you wish to add:");
-                double quantity = double.Parse(Console.ReadLine());
-                ItemList.Add(new ShoppingListItem(Store.Inventory[selectInt], quantity, CustomerID));
-                Console.WriteLine($"{ItemList[ItemList.Count - 1].ToString()}, has been added to the list. Press any key to continue...");
-            }
-            catch (Exception ex)
-            {
-                if (ex is FormatException)
+                Console.WriteLine("Add the item from the list by entering the number related to it:");
+                try
                 {
-                    Console.Write("The input was not in correct format, ");
+                    int selectInt = int.Parse(Console.ReadLine()) - 1;
+                    Console.WriteLine("How many/much of the item do you wish to add:");
+                    double quantity = double.Parse(Console.ReadLine());
+                    ItemList.Add(new ShoppingListItem(Store.Inventory[selectInt], quantity, CustomerID));
+                    Console.WriteLine($"{ItemList[ItemList.Count - 1].ToString()}, has been added to the list.");
                 }
-                else if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                catch (Exception ex)
                 {
-                    Console.Write("The input could not relate to any item in the shoppinglist, ");
+                    if (ex is FormatException)
+                    {
+                        Console.Write("The input was not in correct format, ");
+                    }
+                    else if (ex is IndexOutOfRangeException || ex is ArgumentOutOfRangeException)
+                    {
+                        Console.Write("The input could not relate to any item in the shoppinglist, ");
+                    }
+                    Console.WriteLine("no item was added to the list");
                 }
-                Console.WriteLine("no item was added to the list");
             }
-            Console.ReadLine();
         }
         public void removeItem()
         {
@@ -74,7 +75,7 @@ namespace purchase_list_group2
                 try
                 {
                     int selectInt = int.Parse(Console.ReadLine()) - 1;
-                    Console.WriteLine($"{ItemList[selectInt].ToString()}, has been removed from the list\nPress [Enter] to go back..");
+                    Console.WriteLine($"{ItemList[selectInt].ToString()}, has been removed from the list\nPress any key to continue...");
                     ItemList.RemoveAt(selectInt);
                 }
                 catch (Exception ex)
@@ -94,7 +95,6 @@ namespace purchase_list_group2
             {
                 Console.WriteLine("No items in the list to remove");
             }
-            Console.ReadLine();
         }
         public void editItem()
         {
@@ -133,7 +133,6 @@ namespace purchase_list_group2
                     }
                     Console.WriteLine("no item was edited in the list");
                 }
-                Console.ReadLine();
             }
         }
         public double getTotalCost(ShoppingListItem.EnumStatus status = ShoppingListItem.EnumStatus.NotPicked)
@@ -166,11 +165,11 @@ namespace purchase_list_group2
                     Console.WriteLine($"{shoppingListIndex}. {item.ToString()}, category = {item.Category}, price = {item.Price}, status = {item.Status}");
                     shoppingListIndex++;
                 }
-                Console.WriteLine("Press [Enter] to continue..");
+                Console.WriteLine();
                 return true;
             }
         }
-        public void checkOutShoppingList(User customer, ShoppingList shoppingList)
+        public void checkOutShoppingList(User customer, ShoppingList shoppingList, List<Store> stores)
         {
             int purchasedItems = 0;
             int purchasedItemsTotal = 0;
@@ -180,7 +179,16 @@ namespace purchase_list_group2
                 {
                     item.Status = ShoppingListItem.EnumStatus.Purchased;
                     customer.PurchasedItems.Add(item);
-                    Store.PurchasedItems.Add(item);
+                    int addItem = 0;
+                    foreach (Store store in stores)
+                    {
+                        if (store.StoreID == Store.StoreID)
+                        {
+                            break;
+                        }
+                        addItem++;
+                    }
+                    stores[addItem].PurchasedItems.Add(item);
                     purchasedItems++;
                 }
                 if (item.Status == ShoppingListItem.EnumStatus.Purchased)
@@ -189,12 +197,13 @@ namespace purchase_list_group2
                 }
             }
             Console.WriteLine($"Checkout complete, {purchasedItems} items were purchased, " +
-                $"{ItemList.Count - purchasedItemsTotal} items remains in the list");
+                $"{ItemList.Count - purchasedItemsTotal} items remains in the list.");
             if (purchasedItemsTotal == ItemList.Count)
             {
                 customer.ShoppingLists.Remove(shoppingList);
                 Console.WriteLine("Shopping list has been removed");
             }
+            Console.WriteLine("Press any key to continue...");
         }
         public void changeStatus()
         {
@@ -204,7 +213,7 @@ namespace purchase_list_group2
                 try
                 {
                     int selectInt = int.Parse(Console.ReadLine()) - 1;
-                    Console.WriteLine($"{ItemList[selectInt].ToString()}, now has status 'picked'. Press any key to continue...");
+                    Console.WriteLine($"{ItemList[selectInt].ToString()}, now has status 'picked'\nPress any key to continue...");
                     ItemList[selectInt].Status = ShoppingListItem.EnumStatus.Picked;
                 }
                 catch (Exception ex)
@@ -219,7 +228,6 @@ namespace purchase_list_group2
                     }
                     Console.WriteLine("no item was picked in the list");
                 }
-                Console.ReadLine();
             }
         }
         public override string ToString()
