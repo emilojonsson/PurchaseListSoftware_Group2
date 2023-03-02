@@ -5,17 +5,24 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
-using inköpslista_grupp2;
+using System.Runtime.Serialization;
 
-namespace inköpslista_grupp2
+namespace purchase_list_group2
 {
+    [DataContract]
     public class Store
     {
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
         public Guid StoreID { get; set; }
+        [DataMember]
         public List<StoreItem> inventory;
+        [DataMember]
         public List<Dictionary<string, object>> Campaigns { get; set; }
+        [DataMember]
         public List<Dictionary<string, object>> Purchases { get; set; }
+        [DataMember]
         public List<ShoppingListItem> PurchasedItems { get; set; } = new List<ShoppingListItem>();
 
         public Store(string name)

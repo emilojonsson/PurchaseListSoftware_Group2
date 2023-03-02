@@ -1,4 +1,5 @@
-﻿namespace inköpslista_grupp2
+﻿
+namespace purchase_list_group2
 {
     public class Program
     {
@@ -203,6 +204,9 @@
         {
             //Here we can create objects initialy when we don´t have the database
 
+            Database data1 = new Database();
+            data1.LoadDataBase();
+
             User systemAdmin = new User("systemadmin", "system@gmail.com", true);
             User customer1 = new User("svenne", "svenne@gmail.com", false);
             User customer2 = new User("benne", "benne@gmail.com", false);
@@ -238,6 +242,7 @@
                             break;
                         case 0:
                             loop = false;
+                            data1.SaveToDataBase();
                             break;
                         default:
                             Console.WriteLine("Invalid input. Please enter a valid menu choice.");

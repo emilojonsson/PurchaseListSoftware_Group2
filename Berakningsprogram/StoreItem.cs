@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace inköpslista_grupp2
+namespace purchase_list_group2
 {
     public class StoreItem : Item
     {

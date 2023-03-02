@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Formats.Asn1;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
-
-namespace inköpslista_grupp2
+﻿
+namespace purchase_list_group2
 {
     abstract public class Item
     {

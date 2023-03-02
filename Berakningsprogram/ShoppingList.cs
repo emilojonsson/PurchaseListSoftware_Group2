@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
-namespace inköpslista_grupp2
+namespace purchase_list_group2
 {
     public class ShoppingList
     {

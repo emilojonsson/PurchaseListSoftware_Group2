@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using inköpslista_grupp2;
+using purchase_list_group2;
 
 namespace Berakningsprogram.Tests
 {

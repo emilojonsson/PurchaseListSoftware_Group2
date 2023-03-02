@@ -2,22 +2,32 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static System.Formats.Asn1.AsnWriter;
 
-namespace inköpslista_grupp2
+namespace purchase_list_group2
 {
+    [DataContract]
     public class User
     {
+        [DataMember]
         private bool emailEdited = false; // new private field for editContactInformation() 
+        [DataMember]
         public string? Name { get; set; }
+        [DataMember]
         public Guid UserID { get; set; }
+        [DataMember]
         public string? Email { get; set; }
+        [DataMember]
         public bool SystemAdminstrator { get; set; }
+        [DataMember]
         public List<ShoppingList> ShoppingLists { get; set; } = new List<ShoppingList>();
+        [DataMember]
         public List<ShoppingList> Template { get; set; } = new List<ShoppingList>();
+        [DataMember]
         public List<ShoppingListItem> PurchasedItems { get; set; } = new List<ShoppingListItem>();
         public User(string name, string email, bool systemAdminstrator)
         {
@@ -26,29 +36,6 @@ namespace inköpslista_grupp2
             Email = email;
             SystemAdminstrator = systemAdminstrator;
         }
-
-        public string CSVify()
-        {
-            return $"{nameof(Name)}:{Name},{nameof(UserID)}:{UserID},{nameof(Email)}:{Email},{nameof(SystemAdminstrator)}:{SystemAdminstrator},{nameof(ShoppingLists)}:{string.Join(";", ShoppingLists)}, {nameof(Template)}:{string.Join(";", Template)}, {nameof(PurchasedItems)}:{string.Join(";", PurchasedItems)}";
-        }
-
-        //maybe we should consider moving this method to outside the class. Move it wherever you want.
-        //public User addUser(SomethingDatabaseContext DB) // Needs DB to store a user.
-        //{
-        //    bool SystemAdministrator = false;
-        //    Console.WriteLine("Enter your name: ");
-        //    string Name = Console.ReadLine();
-        //    Console.WriteLine("Enter your mail: ");
-        //    string Email = Console.ReadLine();
-        //    Console.WriteLine("admin(true/false): ");
-        //    //bool SystemAdminstrator = Console.ReadLine();
-        //    //Console.WriteLine("");
-        //    Guid UserID = Guid.NewGuid();
-        //    User user = new User(Name, UserID, Email, false);
-        //    DB.Create<User>(user as User);
-        //    return user;
-        //}
-
         public void createAccount()//"1 Add customer account"); SA MENU
         {
             //Console.WriteLine("Enter the name:");
