@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUser xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/purchase_list_group2">
+	<User>
+		<Email>emil.jonsson@gmail.com</Email>
+		<EmailEdited>false</EmailEdited>
+		<Name>Emil Jönsson</Name>
+		<PurchasedItems />
+		<ShoppingLists />
+		<SystemAdminstrator>false</SystemAdminstrator>
+		<Template />
+		<UserID>2f041ffe-48ac-41bc-b555-d8a48bcd5d90</UserID>
+	</User>
+</ArrayOfUser>

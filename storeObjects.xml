@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfStore xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/purchase_list_group2">
+	<Store>
+		<Campaigns xmlns:d3p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+		<Inventory />
+		<Name>ICA Stormarknad</Name>
+		<PurchasedItems />
+		<Purchases xmlns:d3p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+		<StoreID>0160c0b1-eb59-4b03-bc25-82f0433de13e</StoreID>
+	</Store>
+</ArrayOfStore>
