@@ -15,7 +15,7 @@ namespace purchase_list_group2
         [DataMember]
         public EnumStatus Status { get; set; }
         [DataMember]
-        public DateTime PurchaseDate { get; set; }//Customer Statistics in viewHistoricalPurchases()
+        public DateTime PurchaseDate { get; set; }
         [DataMember]
         public Guid CustomerID { get; set; }
         public ShoppingListItem(StoreItem item, double quantity, Guid customerID)

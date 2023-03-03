@@ -17,7 +17,7 @@ namespace purchase_list_group2
         [DataMember]
         public Guid StoreID { get; set; } = Guid.NewGuid();
         [DataMember]
-        public List<StoreItem> Inventory = new List<StoreItem>();
+        public List<StoreItem> Inventory { get; set; } = new List<StoreItem>();
         [DataMember]
         public List<Dictionary<string, object>> Campaigns { get; set; } = new List<Dictionary<string, object>>();
         [DataMember]
