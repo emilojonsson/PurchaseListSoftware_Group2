@@ -152,6 +152,7 @@ namespace purchase_list_group2
             if (ItemList.Count == 0) 
             {
                 Console.WriteLine($"No items in the shopping list");
+                Console.WriteLine("");
                 return false;
             }
             else
