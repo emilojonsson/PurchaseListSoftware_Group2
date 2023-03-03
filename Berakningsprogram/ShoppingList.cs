@@ -135,12 +135,12 @@ namespace purchase_list_group2
                 }
             }
         }
-        public double getTotalCost(ShoppingListItem.EnumStatus status = ShoppingListItem.EnumStatus.NotPicked)
+        public double getTotalCost()
         {
             double sumOfStatus = 0;
             foreach(ShoppingListItem item in ItemList)
             {
-                if (item.Status == status)
+                if (item.Status == ShoppingListItem.EnumStatus.NotPicked || item.Status == ShoppingListItem.EnumStatus.Picked)
                 {
                     sumOfStatus += item.Price * item.Quantity;
                 }
@@ -232,7 +232,7 @@ namespace purchase_list_group2
         }
         public override string ToString()
         {
-            return $"{Name}, totalcost: {getTotalCost().ToString()} kr, in {Store.Name}";
+            return $"{Name}, totalcost left in list: {getTotalCost().ToString()} kr, in {Store.Name}";
         }
     }
 }

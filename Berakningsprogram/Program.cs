@@ -70,19 +70,20 @@ namespace purchase_list_group2
             Console.WriteLine("4 View store related campaigns");
             Console.WriteLine();
             Console.WriteLine("5 Add new template");
+            Console.WriteLine("6 View saved templates");
             Console.WriteLine();
-            Console.WriteLine("6 Add new shopping list related to a store");
-            Console.WriteLine("7 Add items to a shopping list");
-            Console.WriteLine("8 Remove item from shopping list");
-            Console.WriteLine("9 Remove shopping list and items");
-            Console.WriteLine("10 Edit item in shopping list");
-            Console.WriteLine("11 View shopping lists and their items");
-            Console.WriteLine("12 Share shopping list with other accounts");
+            Console.WriteLine("7 Add new shopping list related to a store");
+            Console.WriteLine("8 Add items to a shopping list");
+            Console.WriteLine("9 Remove item from shopping list");
+            Console.WriteLine("10 Remove shopping list and items");
+            Console.WriteLine("11 Edit item in shopping list");
+            Console.WriteLine("12 View shopping lists and their items");
+            Console.WriteLine("13 Share shopping list with other accounts");
             Console.WriteLine();
-            Console.WriteLine("13 Mark item in shopping list as picked");
-            Console.WriteLine("14 Store checkout"); 
+            Console.WriteLine("14 Mark item in shopping list as picked");
+            Console.WriteLine("15 Store checkout"); 
             Console.WriteLine();
-            Console.WriteLine("15 View account statistics");
+            Console.WriteLine("16 View account statistics");
             Console.WriteLine();
             Console.WriteLine("0 Go back");
             try
@@ -100,6 +101,7 @@ namespace purchase_list_group2
                         return;
                     case 3:
                         selectStore(dataObject).viewStoreItems();
+                        Console.WriteLine("Press any key to continue...");
                         Console.ReadLine();
                         break;
                     case 4:
@@ -107,48 +109,52 @@ namespace purchase_list_group2
                         Console.ReadLine();
                         break;
                     case 5:
-                        customer.addNewTemplates(dataObject.StoreObjects);
+                        customer.createNewTemplate(dataObject.StoreObjects);
                         Console.ReadLine();
                         break;
                     case 6:
-                        customer.addNewShoppingList(customer.UserID, dataObject.StoreObjects);
+                        customer.displaySavedTemplates();
+                        Console.ReadLine();
                         break;
                     case 7:
+                        customer.addNewShoppingList(customer.UserID, dataObject.StoreObjects);
+                        break;
+                    case 8:
                         selectShoppingList(dataObject).addItem();
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadLine();
                         break;
-                    case 8:
+                    case 9:
                         selectShoppingList(dataObject).removeItem();
                         Console.ReadLine();
                         break;
-                    case 9:
+                    case 10:
                         customer.removeShoppingList();
                         Console.ReadLine();
                         break;
-                    case 10:
+                    case 11:
                         selectShoppingList(dataObject).editItem();
                         Console.ReadLine();
                         break;
-                    case 11:
+                    case 12:
                         customer.viewAllShoppingLists();
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadLine();
                         break;
-                    case 12:
+                    case 13:
                         //customer.shareListWithOthers(users);
                         //Console.ReadLine();
                         break;
-                    case 13:
+                    case 14:
                         selectShoppingList(dataObject).changeStatus();
                         Console.ReadLine();
                         break;
-                    case 14:
+                    case 15:
                         ShoppingList shoppingList = selectShoppingList(dataObject);
                         shoppingList.checkOutShoppingList(customer, shoppingList, dataObject.StoreObjects);
                         Console.ReadLine();
                         break;
-                    case 15:
+                    case 16:
                         customer.viewHistoricalPurchases();
                         Console.ReadLine();
                         break;

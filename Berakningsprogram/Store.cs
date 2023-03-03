@@ -57,19 +57,16 @@ namespace purchase_list_group2
                     Console.WriteLine("Invalid input. No store was removed.");
                 }
                 Console.WriteLine("Press Enter to continue.");
-                Console.ReadLine();
             }
             catch (FormatException)
             {
                 Console.WriteLine("The input was not in correct format, no store was removed.");
                 Console.WriteLine("Press Enter to continue.");
-                Console.ReadLine();
             }
             catch (IndexOutOfRangeException)
             {
                 Console.WriteLine("The input could not relate to any store, no store was removed.");
                 Console.WriteLine("Press Enter to continue.");
-                Console.ReadLine();
             }
         }
 
@@ -262,7 +259,7 @@ namespace purchase_list_group2
         {
             if (Campaigns.Count == 0)
             {
-                Console.WriteLine($"{Name} does not have any campaigns.");
+                Console.WriteLine($"{Name} does not have any campaigns. \nPress any key to continue...");
             }
             else
             {
@@ -295,6 +292,7 @@ namespace purchase_list_group2
             {
                 Console.WriteLine(item.Name);
             }
+            Console.WriteLine("Press any key to continue...");
         }
     }
 }   

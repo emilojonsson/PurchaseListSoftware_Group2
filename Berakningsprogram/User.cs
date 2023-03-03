@@ -41,7 +41,7 @@ namespace purchase_list_group2
             Console.WriteLine("Do you wish to create the shoppinglist from a template [yes], if no just press any key...");
             if (Console.ReadLine()?.ToLower() == "yes")
             {
-                addTemplate();
+                addTemplateToShoppingList();
             }
             else
             {
@@ -124,7 +124,7 @@ namespace purchase_list_group2
         {
             throw new NotImplementedException();
         }
-        public void addNewTemplates(List<Store> storeList)
+        public void createNewTemplate(List<Store> storeList)
         {
             Console.WriteLine("Choose a store for the new template:");
             int storeIndex = 1;
@@ -146,7 +146,7 @@ namespace purchase_list_group2
                 Console.WriteLine("Enter the number of the item to add or 'exit' to stop adding items:");
                 string input = Console.ReadLine();
                 if (input == "exit")
-                    return;
+                    break;
                 try
                 {
                     int selectItem = int.Parse(input);
@@ -171,14 +171,44 @@ namespace purchase_list_group2
                     Console.WriteLine("Invalid item number entered, item not added");
                 }
             }
-            addNewTemplates(storeList);
+            Template.Add(newTemplate);
+        }
+        public void displaySavedTemplates()
+        {
+            if (Template.Count == 0)
+            {
+                Console.WriteLine("No saved templates.");
+            }
+            else
+            {
+                Console.WriteLine($"Saved templates for {Name}:");
+                foreach (ShoppingList template in Template)
+                {
+                    Console.WriteLine($"{template.Name} in {template.Store.Name}");
+                    template.viewShoppingList();
+
+                }
+            }
+            Console.WriteLine("Press any key to continue...");
+        }
+        public void addTemplateToShoppingList()
+        {
+            Console.WriteLine("Choose a template from these options:");
+            for (int i = 0; i < Template.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Template[i].Name}");
+            }
+            int templateChoice = int.Parse(Console.ReadLine()) - 1;
+            ShoppingList template = Template[templateChoice];
+            ShoppingList newShoppingList = new ShoppingList(template.Name, UserID, template.Store);
+            ShoppingLists.Add(newShoppingList);
+            Console.WriteLine($"New shopping list '{newShoppingList.Name}' created from template '{template.Name}'.");
         }
         public void editContactInformation()
         {
             if (EmailEdited)
             {
                 Console.WriteLine("Email has already been edited and cannot be updated again.\nPress any key to continue...");
-                Console.ReadLine();
                 return;
             }
             Console.WriteLine($"Old email:{this.Email}");
@@ -206,7 +236,7 @@ namespace purchase_list_group2
         {
             if (ShoppingLists.Count == 0) 
             {
-                Console.WriteLine("No shopping lists to view\nPress any key to continue...");
+                Console.WriteLine("No shopping lists to view.");
             }
             else
             {
@@ -215,31 +245,6 @@ namespace purchase_list_group2
                     Console.WriteLine($"__{list.ToString().ToUpper()}__");
                     list.viewShoppingList();
                 }
-            }
-        }
-        public void addTemplate()
-        {
-            if (ShoppingLists == null)
-            {
-                ShoppingLists = new List<ShoppingList>();
-            }
-            Console.WriteLine("Create a new shopping list: ");
-            Console.WriteLine("1. From scratch");
-            Console.WriteLine("2. From template");
-            int choice = int.Parse(Console.ReadLine());
-            if (choice == 1){ addNewTemplates(new List<Store>()); }
-
-            else if (choice == 2){
-                Console.WriteLine("Choose a template from these options:");
-                for (int i = 0; i < Template.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {Template[i].Name}");
-                }
-                int templateChoice = int.Parse(Console.ReadLine()) - 1;
-                ShoppingList template = Template[templateChoice];
-                ShoppingList newShoppingList = new ShoppingList(template.Name, UserID, new Store("MyStore"));
-                ShoppingLists.Add(newShoppingList);
-                Console.WriteLine($"New shopping list '{newShoppingList.Name}' created from template '{template.Name}':\nPress any key to continue...");
             }
         }
         public void viewHistoricalPurchases()
