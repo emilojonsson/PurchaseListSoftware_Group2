@@ -107,18 +107,24 @@ namespace Berakningsprogram.Tests
             shoppingList.ItemList.Add(new ShoppingListItem(storeItem2, 1, customer.UserID));
             shoppingList.ItemList.Add(new ShoppingListItem(storeItem3, 1, customer.UserID));
             shoppingList.ItemList[0].Status = ShoppingListItem.EnumStatus.NotPicked;
-            shoppingList.ItemList[1].Status = ShoppingListItem.EnumStatus.Picked;
+            shoppingList.ItemList[1].Status = ShoppingListItem.EnumStatus.Purchased;
             shoppingList.ItemList[2].Status = ShoppingListItem.EnumStatus.Purchased;
 
             double actualCost1 = shoppingList.getTotalCost();
-            double actualCost2 = shoppingList.getTotalCost(ShoppingListItem.EnumStatus.NotPicked);
-            double actualCost3 = shoppingList.getTotalCost(ShoppingListItem.EnumStatus.Picked);
-            double actualCost4 = shoppingList.getTotalCost(ShoppingListItem.EnumStatus.Purchased);
-
             Assert.AreEqual(expectedCost1, actualCost1);
-            Assert.AreEqual(expectedCost1, actualCost2);
-            Assert.AreEqual(expectedCost2, actualCost3);
-            Assert.AreEqual(expectedCost3, actualCost4);
+
+            shoppingList.ItemList[0].Status = ShoppingListItem.EnumStatus.Purchased;
+            shoppingList.ItemList[1].Status = ShoppingListItem.EnumStatus.NotPicked;
+            shoppingList.ItemList[2].Status = ShoppingListItem.EnumStatus.Purchased;
+            double actualCost2 = shoppingList.getTotalCost();
+            Assert.AreEqual(expectedCost2, actualCost2);
+
+            shoppingList.ItemList[0].Status = ShoppingListItem.EnumStatus.Purchased;
+            shoppingList.ItemList[1].Status = ShoppingListItem.EnumStatus.Purchased;
+            shoppingList.ItemList[2].Status = ShoppingListItem.EnumStatus.Picked;
+
+            double actualCost3 = shoppingList.getTotalCost();
+            Assert.AreEqual(expectedCost3, actualCost3);
         }
         [TestMethod()]
         public void viewShoppingList()
@@ -178,8 +184,18 @@ namespace Berakningsprogram.Tests
             User customer = new User("Pelle", "p@gmail.com", false);
             StoreItem storeItem1 = new StoreItem("Article 1", "AAA", 1, Item.UnitEnum.Pcs);
             StoreItem storeItem2 = new StoreItem("Article 2", "AAA", 1, Item.UnitEnum.Pcs);
-            ShoppingList listToRemain = new ShoppingList("Shopping list A", customer.UserID, new Store("Ikea"));
-            ShoppingList listToRemove = new ShoppingList("Shopping list B", customer.UserID, new Store("Ikea"));
+            Store Jula = new Store("Jula");
+            Store Ikea = new Store("Ikea");
+
+            ShoppingList listToRemain = new ShoppingList("Shopping list A", customer.UserID, Jula);
+            ShoppingList listToRemove = new ShoppingList("Shopping list B", customer.UserID, Ikea);
+            
+            
+            Store willys = new Store("Willys");
+            List<Store> Storelist = new List<Store>();
+            Storelist.Add(Ikea);
+            Storelist.Add(Jula);
+            Storelist.Add(willys);
             customer.ShoppingLists.Add(listToRemain);
             listToRemain.ItemList.Add(new ShoppingListItem(storeItem1, 1, customer.UserID));
             listToRemain.ItemList.Add(new ShoppingListItem(storeItem2, 1, customer.UserID));
@@ -189,10 +205,10 @@ namespace Berakningsprogram.Tests
             listToRemove.ItemList.Add(new ShoppingListItem(storeItem1, 1, customer.UserID));
             listToRemove.ItemList[0].Status = ShoppingListItem.EnumStatus.Picked;
 
-            listToRemain.checkOutShoppingList(customer, listToRemain);
+            listToRemain.checkOutShoppingList(customer, listToRemain,Storelist);
             ShoppingListItem.EnumStatus actualStatus1 = listToRemain.ItemList[0].Status;
             ShoppingListItem.EnumStatus actualStatus2 = listToRemain.ItemList[1].Status;
-            listToRemove.checkOutShoppingList(customer, listToRemove);
+            listToRemove.checkOutShoppingList(customer, listToRemove,Storelist);
 
             Assert.AreEqual(expectedStatus1, actualStatus1);
             Assert.AreEqual(expectedStatus2, actualStatus2);
