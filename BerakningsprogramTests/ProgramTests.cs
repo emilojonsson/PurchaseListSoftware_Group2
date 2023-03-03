@@ -186,11 +186,8 @@ namespace Berakningsprogram.Tests
             StoreItem storeItem2 = new StoreItem("Article 2", "AAA", 1, Item.UnitEnum.Pcs);
             Store Jula = new Store("Jula");
             Store Ikea = new Store("Ikea");
-
             ShoppingList listToRemain = new ShoppingList("Shopping list A", customer.UserID, Jula);
             ShoppingList listToRemove = new ShoppingList("Shopping list B", customer.UserID, Ikea);
-            
-            
             Store willys = new Store("Willys");
             List<Store> Storelist = new List<Store>();
             Storelist.Add(Ikea);
