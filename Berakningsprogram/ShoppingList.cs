@@ -171,6 +171,7 @@ namespace purchase_list_group2
         }
         public void checkOutShoppingList(User customer, ShoppingList shoppingList, List<Store> stores)
         {
+            DateTime purchaseDate = DateTime.Now;
             int purchasedItems = 0;
             int purchasedItemsTotal = 0;
             foreach (ShoppingListItem item in ItemList)
@@ -178,6 +179,7 @@ namespace purchase_list_group2
                 if (item.Status == ShoppingListItem.EnumStatus.Picked)
                 {
                     item.Status = ShoppingListItem.EnumStatus.Purchased;
+                    item.PurchaseDate = purchaseDate;
                     customer.PurchasedItems.Add(item);
                     int addItem = 0;
                     foreach (Store store in stores)
