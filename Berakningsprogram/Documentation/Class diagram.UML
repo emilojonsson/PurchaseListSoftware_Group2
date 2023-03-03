@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.0.0">
+  <help_text>// Uncomment the following line to change the fontsize and font:
+fontsize=10
+// fontfamily=SansSerif //possible: SansSerif,Serif,Monospaced
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Welcome to UMLet!
+//
+// Double-click on elements to add them to the diagram, or to copy them
+// Edit elements by modifying the text in this panel
+// Hold Ctrl to select multiple elements
+// Use Ctrl+mouse to select via lasso
+//
+// Use +/- or Ctrl+mouse wheel to zoom
+// Drag a whole relation at its central square icon
+//
+// Press Ctrl+C to copy the whole diagram to the system clipboard (then just paste it to, eg, Word)
+// Edit the files in the "palettes" directory to create your own element palettes
+//
+// Select "Custom Elements &gt; New..." to create new element types
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// This text will be stored with each diagram;  use it for notes.</help_text>
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>0</y>
+      <w>352</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>User
+--
+- Name: String
+- UserID : Guid
+- Email: String
+- EmailEdited : bool
+- SystemAdminstrator : Bool
+- ShoppingLists: List&lt;ShoppingList&gt; 
+- Template: List&lt;ShoppingList&gt;
+- PurchasedItems : List&lt;ShoppingListItem&gt;
+
+--
++ addNewShoppingList() :
++ addNewTemplates() :                                                    
++ addTemplate() :                                                 
++ createAccount() :
++ editContactInformation() :
++ removeShoppingList() : 
++ removeUser():
++ shareListWithOthers() :
++ viewAllShoppingLists() :
++ viewHistoricalPurchases() :           </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>88</x>
+      <y>32</y>
+      <w>304</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Database
+--
+- StoreObjects: List&lt;Store&gt;
+- UserObjects: List&lt;User&gt;
+--
++ LoadDataBase()
++ SaveToDataBase()
++ FilePath()
++ SaveViaDataContractSerialization&lt;T&gt;()
++ LoadViaDataContractSerialization&lt;T&gt;()
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>320</y>
+      <w>304</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Store
+--
+- Campaigns : Dictionary&lt;string, object&gt;
+- Name : string
+- PurchasedItems : List&lt;shoppingListItem&gt;
+- StoreID : Guid
+--
++ addCampaign()
++ addStoreItem()
++ editStoreItem()
++ removeStoreAndItems()
++ viewCampaigns()
++ viewHistoricalPurchases()
++ viewStoreItems()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>320</y>
+      <w>352</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>ShoppingList
+--
+- CustomerID : Guid
+- ItemList : ShoppingListItem&gt; 
+- Name : string
+- ShoppingListID : Guid
+- StatusShoppinglist : Status
+- Store : Store
+- TotalCost : double
+--
++ addItem() : 
++ changeStatus() : 
++ checkOutShoppingList() : 
++ editItem() :
++ getTotalCost() : 
++ removeItem() : 
++ ShoppingList() :
++ viewShoppingList() :</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>608</y>
+      <w>352</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>ShoppingListItem
+--
+- CustomerID : Guid
+- PurchaseDate : DateTime
+- Quantity : double
+- Status : EnumStatus
+--
++ ShoppingListItem() :</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>528</y>
+      <w>24</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>256</y>
+      <w>24</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>472</x>
+      <y>632</y>
+      <w>96</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+StatusEnum
+--
+Not Picked
+Picked
+Purchased</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>696</y>
+      <w>104</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;60.0;10.0;60.0;60.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>224</x>
+      <y>512</y>
+      <w>24</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>472</x>
+      <y>720</y>
+      <w>96</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+UnitEnum
+--
+Pcs
+Litres
+Gram</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>648</y>
+      <w>104</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;70.0;60.0;70.0;60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>608</y>
+      <w>304</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>StoreItem
+--
+- ItemID : Guid
+- Unit : UnitEnum
+--
++ StoreItem()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>376</x>
+      <y>696</y>
+      <w>112</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;60.0;120.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>376</x>
+      <y>936</y>
+      <w>304</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>/Item/
+--
+- Category : string
+- ItemId : guid
+- Name : string
+- Price : double
+- unit : UnitEnum
+--
++ ShoppingListItem()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>472</x>
+      <y>344</y>
+      <w>96</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Status
+--
+NotPurchased
+Purchased</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>360</y>
+      <w>104</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>110.0;70.0;60.0;70.0;60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>520</x>
+      <y>800</y>
+      <w>336</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;80.0;400.0;80.0;400.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>216</x>
+      <y>800</y>
+      <w>328</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;use&gt;&gt;</panel_attributes>
+    <additional_attributes>390.0;170.0;390.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
