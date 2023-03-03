@@ -288,8 +288,42 @@ namespace purchase_list_group2
 
         public void viewHistoricalPurchases(List<Store> stores)
         {
+            bool addItem = false;
+            foreach (StoreItem storeItem in Inventory)
+            {
+                foreach (ShoppingListItem shopItem in PurchasedItems)
+                {
+                    if (storeItem.ItemID == shopItem.ItemID)
+                    {
+                        addItem = false;
+                        break;
+                    }
+                    else
+                    {
+                        addItem = true;
+                    }
+                }
+                if (addItem)
+                {
+                    ShoppingListItem zeroSaleItem = new ShoppingListItem(storeItem, 0, storeItem.ItemID);
+                    zeroSaleItem.PurchaseDate = DateTime.Now;
+                    PurchasedItems.Add(zeroSaleItem);
+                }
+            }
+            Console.WriteLine("What is the start date:");
+            DateTime startDate = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("What is the end date:");
+            DateTime endDate = DateTime.Parse(Console.ReadLine());
+            List<ShoppingListItem> itemsInIntervall = new List<ShoppingListItem>();
+            foreach(ShoppingListItem shopItem in PurchasedItems)
+            {
+                if (shopItem.PurchaseDate <= endDate && shopItem.PurchaseDate >= startDate)
+                {
+                    itemsInIntervall.Add(shopItem);
+                }
+            }
             Console.WriteLine($"\nSales statistics per {Name}:");
-            IEnumerable<ShoppingListItem> purchasedItems = PurchasedItems;
+            IEnumerable<ShoppingListItem> purchasedItems = itemsInIntervall;
             int purchasedItemCountForStore = purchasedItems?.Sum(item => (int)item.Quantity) ?? 0;
             if (purchasedItems != null && purchasedItems.Any())
             {

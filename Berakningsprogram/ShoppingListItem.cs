@@ -24,7 +24,7 @@ namespace purchase_list_group2
             this.Name = item.Name;
             this.Category = item.Category;
             this.Price = item.Price;
-            this.ItemID = Guid.NewGuid();
+            this.ItemID = item.ItemID;
             this.Unit = item.Unit;
             this.Status = EnumStatus.NotPicked;
             this.CustomerID = customerID;
