@@ -120,12 +120,12 @@ namespace purchase_list_group2
                         customer.addNewShoppingList(customer.UserID, dataObject.StoreObjects);
                         break;
                     case 8:
-                        selectShoppingList(dataObject).addItem();
+                        selectShoppingList(customer).addItem();
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadLine();
                         break;
                     case 9:
-                        selectShoppingList(dataObject).removeItem();
+                        selectShoppingList(customer).removeItem();
                         Console.ReadLine();
                         break;
                     case 10:
@@ -133,7 +133,7 @@ namespace purchase_list_group2
                         Console.ReadLine();
                         break;
                     case 11:
-                        selectShoppingList(dataObject).editItem();
+                        selectShoppingList(customer).editItem();
                         Console.ReadLine();
                         break;
                     case 12:
@@ -146,11 +146,11 @@ namespace purchase_list_group2
                         Console.ReadLine();
                         break;
                     case 14:
-                        selectShoppingList(dataObject).changeStatus();
+                        selectShoppingList(customer).changeStatus();
                         Console.ReadLine();
                         break;
                     case 15:
-                        ShoppingList shoppingList = selectShoppingList(dataObject);
+                        ShoppingList shoppingList = selectShoppingList(customer);
                         shoppingList.checkOutShoppingList(customer, shoppingList, dataObject.StoreObjects);
                         Console.ReadLine();
                         break;

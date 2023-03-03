@@ -27,11 +27,11 @@ namespace purchase_list_group2
             while (intStore < 0 || intStore >= dataObject.StoreObjects.Count);
             return dataObject.StoreObjects[intStore];
         }
-        static ShoppingList selectShoppingList(Database dataObject)
+        static ShoppingList selectShoppingList(User customer)
         {
             int intShoppingList = 0;
             int shoppingListIndex = 1;
-            foreach (ShoppingList shoppingList in dataObject.UserObjects[0].ShoppingLists)
+            foreach (ShoppingList shoppingList in customer.ShoppingLists)
             {
                 Console.WriteLine($"{shoppingListIndex}. {shoppingList.Name}");
                 shoppingListIndex++;
@@ -42,9 +42,9 @@ namespace purchase_list_group2
                 if (int.TryParse(Console.ReadLine(), out intShoppingList))
                 {
                     intShoppingList--;
-                    if (intShoppingList >= 0 && intShoppingList < dataObject.UserObjects[0].ShoppingLists.Count)
+                    if (intShoppingList >= 0 && intShoppingList < customer.ShoppingLists.Count)
                     {
-                        return dataObject.UserObjects[0].ShoppingLists[intShoppingList];
+                        return customer.ShoppingLists[intShoppingList];
                     }
                 }
                 Console.WriteLine("The input was not in correct format, try again");
