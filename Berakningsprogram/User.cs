@@ -120,9 +120,28 @@ namespace purchase_list_group2
                 }
             }
         }
-        public void shareListWithOthers(List<User> users)
+        public void shareListWithOthers(List<User> listOfUsers)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("What list do you want to share?");
+            int count = 1;
+            foreach (ShoppingList list in ShoppingLists)
+            {
+                Console.WriteLine($"{count}: {list.Name}");
+                count++;
+            }
+            int selectedList = Convert.ToInt32(Console.ReadLine()) - 1;
+            Console.WriteLine("Which user do you want to share the list with?");
+            count = 1;
+            foreach (User user in listOfUsers)
+            {
+                Console.WriteLine($"{count}: {user.Name} - {user.Email}");
+                count++;
+            }
+            int selectedUser = Convert.ToInt32(Console.ReadLine()) - 1;
+            User userToRecieve = listOfUsers[selectedUser];
+            userToRecieve.ShoppingLists.Add(ShoppingLists[selectedList]);
+            userToRecieve.ShoppingLists[ShoppingLists.Count - 1].CustomerID = userToRecieve.UserID;
+            Console.WriteLine($"{userToRecieve.Name} now has a copy of your list. Press any key to continue...");
         }
         public void createNewTemplate(List<Store> storeList)
         {

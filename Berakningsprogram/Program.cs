@@ -142,8 +142,8 @@ namespace purchase_list_group2
                         Console.ReadLine();
                         break;
                     case 13:
-                        //customer.shareListWithOthers(users);
-                        //Console.ReadLine();
+                        customer.shareListWithOthers(dataObject.UserObjects);
+                        Console.ReadLine();
                         break;
                     case 14:
                         selectShoppingList(dataObject).changeStatus();
