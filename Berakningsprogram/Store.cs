@@ -286,13 +286,36 @@ namespace purchase_list_group2
             }
         }
 
-        public void viewHistoricalPurchases()
+        public void viewHistoricalPurchases(List<Store> stores)
         {
-            foreach(ShoppingListItem item in PurchasedItems)
+            Console.WriteLine($"\nSales statistics per {Name}:");
+            IEnumerable<ShoppingListItem> purchasedItems = PurchasedItems;
+            int purchasedItemCountForStore = purchasedItems?.Sum(item => (int)item.Quantity) ?? 0;
+            if (purchasedItems != null && purchasedItems.Any())
             {
-                Console.WriteLine(item.Name);
+                Dictionary<string, double> salesByProduct = purchasedItems.GroupBy(item => item.Name).ToDictionary(g => g.Key, g => g.Sum(item => item.Quantity));
+                IEnumerable<KeyValuePair<string, double>> topSellingProducts = salesByProduct.OrderByDescending(kvp => kvp.Value).Take(3);
+                IEnumerable<KeyValuePair<string, double>> leastSellingProducts = salesByProduct.OrderBy(kvp => kvp.Value).Take(3);
+                Console.WriteLine("Top 3 most purchased products:");
+                int i = 1;
+                foreach (KeyValuePair<string, double> product in topSellingProducts)
+                {
+                    Console.WriteLine($"{i}. {product.Key} : {product.Value}");
+                    i++;
+                }
+                Console.WriteLine("\n3 least purchased products:");
+                i = 1;
+                foreach (KeyValuePair<string, double> product in leastSellingProducts)
+                {
+                    IEnumerable<ShoppingListItem> itemsWithStatus = purchasedItems.Where(item => item.Name == product.Key && item.Status != ShoppingListItem.EnumStatus.Purchased);
+                    Console.WriteLine($"{i}. {product.Key}");
+                    i++;
+                }
             }
-            Console.WriteLine("Press any key to continue...");
+            else
+            {
+                Console.WriteLine($"No purchased items for {Name}.");
+            }
         }
     }
 }   

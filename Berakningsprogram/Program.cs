@@ -46,7 +46,7 @@ namespace purchase_list_group2
                         Console.ReadLine(); 
                         break;
                     case 7:
-                        selectStore(dataObject).viewHistoricalPurchases();
+                        selectStore(dataObject).viewHistoricalPurchases(dataObject.StoreObjects);
                         Console.ReadLine();
                         break;
                     default:
