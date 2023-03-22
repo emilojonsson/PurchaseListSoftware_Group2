@@ -1,3 +1,4 @@
 Testa med generisk funktion för att lägga in och läsa olika object i metoderna
+Försöka organisera det så att man har CRUD-metoderna i egen fil/klass
 Lägga till metoderna Delete
 Lägga till metoden Update
