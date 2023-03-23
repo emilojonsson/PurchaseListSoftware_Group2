@@ -1,5 +1,7 @@
 ﻿using Npgsql;
 using System.Data;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace TestDatabasePostgres
 {
@@ -50,5 +52,35 @@ namespace TestDatabasePostgres
                 return values;
             }
         }
+        public static void UpdateRecord(string tablename, string id, string data = "NULL", string data1 = "NULL", string data2 = "NULL")
+        {
+            using (NpgsqlConnection con = GetConnection())
+            {
+                var query = $@"call update_record({tablename},{id},{data},{data1},{data2})";
+                NpgsqlCommand cmd = new NpgsqlCommand(query, con);
+                con.Open();
+                int n = cmd.ExecuteNonQuery();
+                if (n == 1 || n == -1)
+                {
+                    Console.WriteLine($"updated ID:{id} in the database");
+                }
+            }
+
+        }
+        public static void DeleteRecord(string tablename, int id)
+        {
+            using (NpgsqlConnection con = GetConnection())
+            {
+                var query = $@"call delete_record({tablename},{id})";
+                NpgsqlCommand cmd = new NpgsqlCommand(query, con);
+                con.Open();
+                int n = cmd.ExecuteNonQuery();
+                if (n == 1 || n == -1)
+                {
+                    Console.WriteLine($"deleted ID:{id} in the database");
+                }
+            }
+        }
+        }
     }
-}
+
